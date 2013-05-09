@@ -23,8 +23,7 @@ class USGS extends Curl
 		$url = $baseUrl;
 		$this->_logger->debug('USGS URL: ' . $url);
 
-		$earthquakes = json_decode(self::runCurl('GET', $url));
-		return $earthquakes;
+		return json_decode(self::runCurl('GET', $url));
 	}
 
 	protected function runCurl($requestMethod, $url)

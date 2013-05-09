@@ -4,7 +4,6 @@ session_start();
 
 require_once dirname(__FILE__) . '/includes/includes.php';
 require_once dirname(__FILE__) . '/Sag/Sag.php';
-require_once dirname(__FILE__) . '/Twitter/oauthdamnit.php';
 
 $peq = new processEarthquakes();
 $peq->getEarthquakes();
@@ -12,6 +11,8 @@ $peq->getEarthquakes();
 class processEarthquakes
 {
 	private $_logger;
+	private $_sag;
+	private $_docID;
 
 	public function __construct()
 	{
@@ -27,67 +28,74 @@ class processEarthquakes
 		$earthquakeArray = $earthquakes->features;
 
 		global $earthquakesDBLogin;
-		$sag = new Sag();
-		$sag->login($earthquakesDBLogin['username'], $earthquakesDBLogin['password']);
-		$sag->setDatabase('earthquakes');
+		$this->_sag = new Sag();
+		$this->_sag->login($earthquakesDBLogin['username'], $earthquakesDBLogin['password']);
+		$this->_sag->setDatabase('earthquakes');
+
+		$newEarthquakeCount = 0;
 
 		foreach ($earthquakeArray as $earthquake) {
-			$docID = $earthquake->id;
-			if (!empty($docID)) {
+			$this->_docID = $earthquake->id;
+			if (!empty($this->_docID)) {
 				try {
-					$response = $sag->put($docID, $earthquake);
+					$response = $this->_sag->put($this->_docID, $earthquake);
 					if (isset($response->headers->_HTTP->status) && $response->headers->_HTTP->status == '201') {
+						$this->_logger->info('Earthquake added: ' . $earthquake->id);
 						$this->sendTweet($earthquake);
-						$this->_logger->info('Earthquake added.');
+						$newEarthquakeCount++;
+					} else {
+						$this->logAndAddError(0, 'There was a problem adding the following earthquake to the database: ' . $this->_docID . ' (exception not thrown).');
 					}
 				} catch (SagCouchException $sce) {
 					if ($sce->getCode() != 409) {
 						try {
-							$this->_logger->error('Problem with earthquake data, could not insert into database: ' . $sce->getMessage());
-							$sag->put($docID, $this->getStandardObject($docID, $sce->getCode(), $sce->getMessage()));
+							$this->logAndAddError($sce->getCode(), 'Problem with earthquake data, could not insert into database: ' . $sce->getMessage() . ' - sagCouchException');
 						} catch (Exception $e) {
-							$this->_logger->error('Extensive problems with earthquake data, could not insert into database: ' . $e->getMessage() . ' - sagCouchException');
-							$sag->post($this->getStandardObject($docID, $e->getCode(), $e->getMessage(), 'post'));
+							$this->logAndAddError($e->getCode(), 'Extensive problems with earthquake data, could not insert into database: ' . $e->getMessage() . ' - sagCouchException');
 						}
 					} else {
-						$this->_logger->debug('duplicate earthquake - sagCouchException');
+						$this->_logger->debug('Duplicate earthquake - sagCouchException.');
 					}
 				} catch (SagException $se) {
 					if ($se->getCode() != 409) {
 						try {
-							$this->_logger->error('Problem with earthquake data, could not insert into database: ' . $se->getMessage());
-							$sag->put($docID, $this->getStandardObject($docID, $se->getCode(), $se->getMessage()));
+							$this->logAndAddError($se->getCode(), 'Problem with earthquake data, could not insert into database: ' . $se->getMessage() . ' - sagException');
 						} catch (Exception $e) {
-							$this->_logger->error('Extensive problems with earthquake data, could not insert into database: ' . $e->getMessage() . ' - sagException');
-							$sag->post($this->getStandardObject($docID, $e->getCode(), $e->getMessage(), 'post'));
+							$this->logAndAddError($e->getCode(), 'Extensive problems with earthquake data, could not insert into database: ' . $e->getMessage() . ' - sagException');
 						}
 					} else {
-						$this->_logger->debug('duplicate earthquake - sagException');
+						$this->_logger->debug('Duplicate earthquake - sagException.');
 					}
 				}
 			} else {
+				$this->_docID = 0;
 				try {
-					$this->_logger->error('Could not extract an id for this earthquake.');
-					$sag->post($this->getStandardObject($docID, 0, 'Could not extract an id for this earthquake.', 'post'));
+					$this->logAndAddError(0, 'Could not extract an id for an earthquake (exception not thrown).');
 				} catch (Exception $e) {
-					$this->_logger->error('Could not extract an id for this earthquake and could not make any entry into the database.');
+					$this->_logger->error('Could not extract an id for this earthquake and could not make any entry into the database(' . $e->getCode() . '): ' . $e->getMessage());
 				}
 			}
 		}
+		if ($newEarthquakeCount > 0) {
+			$earthquakeLabel = ($newEarthquakeCount > 1) ? 'earthquakes' : 'earthquake';
+			$this->_logger->info($newEarthquakeCount . ' new ' . $earthquakeLabel . ' added and reported.');
+		}
 	}
 
-	private function getStandardObject($docID, $exceptionCode, $exceptionMessage, $verb = 'put')
+	private function logAndAddError($exceptionCode, $exceptionMessage)
+	{
+		$this->_logger->error($exceptionMessage);
+		$this->_sag->post($this->getStandardObject($exceptionCode, $exceptionMessage));
+	}
+
+	private function getStandardObject($exceptionCode, $exceptionMessage)
 	{
 		$exceptionArray = array(
 			'exceptionCode' => $exceptionCode,
 			'exceptionMessage' => $exceptionMessage
 		);
 		$doc = new stdClass();
-		if ($verb == 'put') {
-			$doc->_id = $docID;
-		} else if ($verb == 'post') {
-			$doc->id = $docID;
-		}
+		$doc->id = $this->_docID;
 		$doc->created = time();
 		$doc->data = $exceptionArray;
 
@@ -96,25 +104,31 @@ class processEarthquakes
 
 	private function sendTweet($earthquake)
 	{
-		$this->_logger->debug('Sending tweet about earthquake.');
-
 		global $twitterCreds;
 
 		$magnitude = $earthquake->properties->mag;
 		$place = $earthquake->properties->place;
 		$time = date('n/j/y @ G:i:s', substr($earthquake->properties->time, 0, 10));
 		$url = $earthquake->properties->url;
-		$status = 'USGS reports a M ' . $magnitude .  ' earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
+		$lat = $earthquake->geometry->coordinates[1];
+		$long = $earthquake->geometry->coordinates[0];
+
+		$status = 'USGS reports a M' . $magnitude .  ' earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
+
+		$this->_logger->info('Tweeting this: ' . $status . ' @ ' . $lat . ' ' . $long);
 
 		$tweet = array(
 			'status' => $status,
-			'lat' => $earthquake->geometry->coordinates[1],
-			'long' => $earthquake->geometry->coordinates[0],
+			'lat' => $lat,
+			'long' => $long,
 			'display_coordinates' => true
 		);
-		$twitter = new OAuthDamnit($twitterCreds['consumerKey'], $twitterCreds['consumerSecret'], $twitterCreds['accessToken'], $twitterCreds['accessTokenSecret']);
-		$raw = $twitter->post('https://api.twitter.com/1.1/statuses/update.json', $tweet);
-		$response = @json_decode($raw, true);
-		var_dump($response);
+
+		$twitter = new Twitter($twitterCreds['consumerKey'], $twitterCreds['consumerSecret'], $twitterCreds['accessToken'], $twitterCreds['accessTokenSecret']);
+		if ($twitter->tweet($tweet) === false) {
+			$this->_logger->error('Twitter post failed for earthquake: ' . $earthquake->id);
+		} else {
+			$this->_logger->info('Twitter post succeeded for earthquake: ' . $earthquake->id);
+		}
 	}
 }
