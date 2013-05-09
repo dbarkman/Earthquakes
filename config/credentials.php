@@ -6,14 +6,14 @@
  *
  */
 
-$readeyDB = array(
-	'sqlHost' => 'localhost',
-	'sqlUser' => 'readey',
-	'sqlPassword' => 'J2yfRecDCBk3u9XUj9746Y8W4zx8nKvT',
-	'sqlDatabase' => 'readey'
+$earthquakesDBLogin = array(
+	'username' => 'earthquakes',
+	'password' => '6A3iwRPWFv9y2T7Xs8Zkd4CY9agpB67V'
 );
 
-$readeyAPILogin = array(
-	'username' => 'readeyAPI',
-	'password' => 'VWt8D24Kr3R47Hgsp96ZUcEz6xamY8Ne'
+$twitterCreds = array(
+	'consumerKey' => 'en7bwrReAEGZBTvFlqXrw',
+	'consumerSecret' => 'pgUH3nK18XdPkUSZ6HEv9fRT54FJjdgRC1KuTz0zPo',
+	'accessToken' => '1414684496-mSv363PQskycDx6z9tWhsZ3ExNx64HwSifTFHmG',
+	'accessTokenSecret' => 'VW94uQPMn3WmurumLvFcqZOJ7Q9C8EXJ0avoBtHAHg'
 );

@@ -1,20 +1,20 @@
 <?php
 
 /**
- * ReadeyProperties.class.php
+ * EarthquakesProperties.class.php
  * Description:
  *
  */
 
-class ReadeyProperties extends Properties
+class EarthquakesProperties extends Properties
 {
 	private $_propertiesFile;
-	const PROP_LOGFILE = "readey.log.file";
-	const PROP_LOGLEVEL = "readey.log.level";
+	const PROP_LOGFILE = "earthquakes.log.file";
+	const PROP_LOGLEVEL = "earthquakes.log.level";
 
 	public function __construct()
 	{
-		$this->_propertiesFile = dirname(__FILE__) . '/../config/readey.properties';
+		$this->_propertiesFile = dirname(__FILE__) . '/../config/earthquakes.properties';
 		$this->load($this->_propertiesFile);
 	}
 

@@ -33,7 +33,3 @@ function autoloadControllers($className) {
 spl_autoload_register("autoloaddbFramework");
 spl_autoload_register("autoloadModels");
 spl_autoload_register("autoloadControllers");
-
-//spl_autoload_register(function ($class) {
-//	require_once dirname(__FILE__) . '/../controllers/' . $class . '.class.php';
-//});
