@@ -113,7 +113,7 @@ class processEarthquakes
 		$lat = $earthquake->geometry->coordinates[1];
 		$long = $earthquake->geometry->coordinates[0];
 
-		$status = 'USGS reports a M' . $magnitude .  ' earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
+		$status = 'USGS reports a M' . $magnitude .  ' #earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
 
 		$this->_logger->info('Tweeting this: ' . $status . ' @ ' . $lat . ' ' . $long);
 
