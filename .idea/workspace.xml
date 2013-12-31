@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b4e24c5-9e98-4194-832d-d90472bd9c33" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/credentials.php" afterPath="$PROJECT_DIR$/config/credentials.php" />
-    </list>
+    <list default="true" id="6b4e24c5-9e98-4194-832d-d90472bd9c33" name="Default" comment="" />
     <ignored path="Earthquakes.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1371195480743" ignored="false" />
+    <file path="/Dummy.txt" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1377106629596" ignored="false" />
     <file path="/earthquakes.properties" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1369251623840" ignored="false" />
     <file path="/credentials.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368078582995" ignored="false" />
     <file path="/a.dummy" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368224507339" ignored="false" />
@@ -74,7 +72,7 @@
       <file leaf-file-name="processEarthquakes.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="0.21511628">
+            <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="1.9593023">
               <folding />
             </state>
           </provider>
@@ -83,7 +81,7 @@
       <file leaf-file-name="USGS.controller.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="24" selection-start="446" selection-end="446" vertical-scroll-proportion="-11.875">
+            <state line="23" column="24" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -92,7 +90,7 @@
       <file leaf-file-name="credentials.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/credentials.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="167" selection-end="444" vertical-scroll-proportion="-9.375">
+            <state line="19" column="0" selection-start="167" selection-end="444" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -182,7 +180,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -231,6 +228,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -239,8 +237,8 @@
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PublishConfig" serverName="web1-Earthquakes" serverId="5e865590-7232-4c8f-b266-d4e634b8ecb4" autoUpload="true">
     <servers>
@@ -510,15 +508,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="848" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32669324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20086083" sideWeight="0.67330676" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20373027" sideWeight="0.67330676" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -526,6 +523,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="122" width="1240" height="645" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32669324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32933334" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -670,21 +668,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="24" selection-start="446" selection-end="446" vertical-scroll-proportion="-11.875">
+        <state line="23" column="24" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/credentials.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="167" selection-end="444" vertical-scroll-proportion="-9.375">
+        <state line="19" column="0" selection-start="167" selection-end="444" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="0.21511628">
+        <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="1.9593023">
           <folding />
         </state>
       </provider>
