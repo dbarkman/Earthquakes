@@ -31,14 +31,15 @@ class Container
 		return self::$shared['logger'] = $logger;
 	}
 
-	public function getValidation()
+	public function getMongoDBConnect()
 	{
-		if (isset(self::$shared['validation'])) {
-			return self::$shared['validation'];
+		if (isset(self::$shared['mongoDBConnect'])) {
+			return self::$shared['mongoDBConnect'];
 		}
 
-		$validation = new ReadeyFrameworkValidation($this->getLogger());
+		global $earthquakesMongoDBLogin;
+		$mongoDBConnect = new MongoDBConnect($earthquakesMongoDBLogin['username'], $earthquakesMongoDBLogin['password'], $earthquakesMongoDBLogin['server'], $earthquakesMongoDBLogin['database'], $earthquakesMongoDBLogin['collection']);
 
-		return self::$shared['validation'] = $validation;
+		return self::$shared['mongoDBConnect'] = $mongoDBConnect->getCollection();
 	}
 }

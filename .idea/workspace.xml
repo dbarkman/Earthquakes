@@ -1,55 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b4e24c5-9e98-4194-832d-d90472bd9c33" name="Default" comment="" />
+    <list default="true" id="6b4e24c5-9e98-4194-832d-d90472bd9c33" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/listFollowers.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/processEarthquakes.php" afterPath="$PROJECT_DIR$/processEarthquakesCouch.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Container.controller.php" afterPath="$PROJECT_DIR$/controllers/Container.controller.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/config.php" afterPath="$PROJECT_DIR$/config/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/credentials.php" afterPath="$PROJECT_DIR$/config/credentials.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/earthquakes.properties" afterPath="$PROJECT_DIR$/config/earthquakes.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/processEarthquakes.php" afterPath="$PROJECT_DIR$/processEarthquakes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="Earthquakes.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1377106629596" ignored="false" />
-    <file path="/earthquakes.properties" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1369251623840" ignored="false" />
-    <file path="/credentials.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368078582995" ignored="false" />
-    <file path="/a.dummy" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368224507339" ignored="false" />
-    <file path="/USGS.controller.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1369252077503" ignored="false" />
-    <file path="/processEarthquakes.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368135817787" ignored="false" />
-    <file path="/Container.controller.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368041634377" ignored="false" />
-    <file path="/EarthquakesProperties.controller.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368041609253" ignored="false" />
-    <file path="/Sag.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368073875075" ignored="false" />
-    <file path="/SagNativeHTTPAdapter.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368073983056" ignored="false" />
-    <file path="$PROJECT_DIR$/../dbFramework/controllers/Logger.class.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368111587447" ignored="false" />
-    <file path="$PROJECT_DIR$/../ReadeyFramework/models/RSSItem.model.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368111920575" ignored="false" />
-    <file path="/RSSItem.model.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368111920575" ignored="false" />
-    <file path="/readey.properties" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368112149885" ignored="false" />
-    <file path="$PROJECT_DIR$/../ReadeyFramework/config/readey.properties" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368112149886" ignored="false" />
-    <file path="/checkTwitter.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368113438564" ignored="false" />
-    <file path="/oauthdamnit.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368126399973" ignored="false" />
-    <file path="$PROJECT_DIR$/../dbFramework/controllers/SendEmail.class.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368135240463" ignored="false" />
-    <file path="$PROJECT_DIR$/../dbFramework/controllers/Twitter.class.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1369114635888" ignored="false" />
-    <file path="/Twitter.class.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1369114501978" ignored="false" />
-    <file path="/SendEmail.class.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368135226351" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious/Apis/ExampleApi/Configurations/MyConfig.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368221264944" ignored="false" />
-    <file path="/WhichConfig.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368224532963" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious/Apis/ExampleApi/Configurations/WhichConfig.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368220376746" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious/Apis/ExampleApi/Website/Rest/index.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368223146670" ignored="false" />
-    <file path="/index.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368221498841" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious/Apis/ExampleApi/Load.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368223159829" ignored="false" />
-    <file path="/Load.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368222903696" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious/Load.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368220610044" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious/Classes/Framework/Core/PhpSessionManagementObj.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368220736785" ignored="false" />
-    <file path="/PhpSessionManagementObj.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368227515317" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious/Classes/Api/Core/BuilderConfigObj.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368223111907" ignored="false" />
-    <file path="/BuilderConfigObj.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368223036582" ignored="false" />
-    <file path="/MyConfig.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368221247939" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-Precious/Apis/ExampleApi/Configurations/WhichConfig.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368224532963" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-Precious/build.xml" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368227144143" ignored="false" />
-    <file path="/build.xml" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368227140519" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-Precious/Testing/Framework/RoomObj.test.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368229768808" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-Precious/Classes/Framework/Core/PhpSessionManagementObj.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368227544213" ignored="false" />
-    <file path="/RoomObj.test.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368229768808" ignored="false" />
-    <file path="$PROJECT_DIR$/../../../StormSource/PHP/API-Precious/Classes/Framework/Core/MemcacheFactoryObj.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1368229684769" ignored="false" />
-    <file path="/getTwitterUserTimeline.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1369115911310" ignored="false" />
-    <file path="$PROJECT_DIR$/../QuantifyMeFramework/config/credentials.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1371196598079" ignored="false" />
-    <file path="$PROJECT_DIR$/../QuantifyMeFramework/models/Record.model.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1371197436023" ignored="false" />
-    <file path="/Record.model.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1371197145547" ignored="false" />
-    <file path="$PROJECT_DIR$/../QuantifyMeFramework/models/Category.model.php" changelist="6b4e24c5-9e98-4194-832d-d90472bd9c33" time="1371196356769" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,19 +33,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="processEarthquakes.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="processEarthquakes.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="1.9593023">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="USGS.controller.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="24" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
+            <state line="89" column="40" selection-start="2751" selection-end="2751" vertical-scroll-proportion="-19.375" vertical-offset="870" max-vertical-offset="1635">
               <folding />
             </state>
           </provider>
@@ -90,25 +45,16 @@
       <file leaf-file-name="credentials.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/credentials.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="167" selection-end="444" vertical-scroll-proportion="0.0">
+            <state line="27" column="0" selection-start="659" selection-end="659" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="435">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="getTwitterUserTimeline.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/getTwitterUserTimeline.php">
+      <file leaf-file-name="listFollowers.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/listFollowers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="64" selection-start="893" selection-end="893" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="earthquakes.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="27" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0">
+            <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.058577407" vertical-offset="753" max-vertical-offset="1635">
               <folding />
             </state>
           </provider>
@@ -134,17 +80,20 @@
       <list>
         <option value="$PROJECT_DIR$/includes/includes.php" />
         <option value="$PROJECT_DIR$/controllers/EarthquakesProperties.controller.php" />
-        <option value="$PROJECT_DIR$/controllers/Container.controller.php" />
         <option value="$PROJECT_DIR$/Sag/Sag.php" />
         <option value="$PROJECT_DIR$/Sag/httpAdapters/SagNativeHTTPAdapter.php" />
-        <option value="$PROJECT_DIR$/config/config.php" />
         <option value="$PROJECT_DIR$/checkTwitter.php" />
         <option value="$PROJECT_DIR$/Twitter/oauthdamnit.php" />
         <option value="$PROJECT_DIR$/getTwitterUserTimeline.php" />
-        <option value="$PROJECT_DIR$/config/earthquakes.properties" />
         <option value="$PROJECT_DIR$/controllers/USGS.controller.php" />
         <option value="$PROJECT_DIR$/config/credentials.php" />
+        <option value="$PROJECT_DIR$/processEarthquakesTest.php" />
+        <option value="$PROJECT_DIR$/controllers/Container.controller.php" />
+        <option value="$PROJECT_DIR$/config/config.php" />
+        <option value="$PROJECT_DIR$/mongotest.php" />
+        <option value="$PROJECT_DIR$/config/earthquakes.properties" />
         <option value="$PROJECT_DIR$/processEarthquakes.php" />
+        <option value="$PROJECT_DIR$/listFollowers.php" />
       </list>
     </option>
   </component>
@@ -180,6 +129,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -195,6 +145,34 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Earthquakes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Earthquakes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Earthquakes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="includes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Earthquakes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Earthquakes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="icons" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -228,233 +206,16 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../StormSource/PHP/API-ThePrecious" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ReadeyFramework" />
     <property name="FullScreen" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-  </component>
-  <component name="PublishConfig" serverName="web1-Earthquakes" serverId="5e865590-7232-4c8f-b266-d4e634b8ecb4" autoUpload="true">
-    <servers>
-      <server id="0914efd2-803f-4300-af3a-5308366fadc1">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="0a13ad70-3fca-49a7-a74d-96ed568342f5">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="1f5a1397-eac7-4da3-a001-e7d20dd15805">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="2283f498-94eb-4add-b5ac-91856dc9fa5e">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="22c35424-5e78-4fb9-b39f-ee0dec6c8406">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="255047fe-c221-4bc6-a191-4f884fb5b78d">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="272ee681-1ed7-4608-997e-a16fce463e2b">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="29ed8e16-5858-42a8-902e-92687b76ca50">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="3583b9eb-70c5-4f30-88bd-27c340b1b0f6">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="41cfe98e-6319-4753-abe1-f884a9bf094a">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="5662dd4e-d23f-48de-9c94-c71800daaa41">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="58867837-e0ba-4f6b-99f1-caa06e6672c4">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="5e865590-7232-4c8f-b266-d4e634b8ecb4">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/Earthquakes" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="62bdccca-5e1f-4171-9a03-1200a4c033a3">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="65433106-6947-4f21-93cd-30a95959ac55">
-        <serverdata />
-      </server>
-      <server id="71e146a1-ee9b-4ab0-980c-34dc863092e3">
-        <serverdata />
-      </server>
-      <server id="775d3098-9947-48b7-a5d1-7755154c65de">
-        <serverdata />
-      </server>
-      <server id="925607bb-1844-4641-b98a-2e3e0335e6d0">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="9494a4f7-7c0b-4d54-a40c-c8219cadd16c">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="a7c0e999-f759-4017-9e13-c0dc36ade0ae">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="ac903f93-5343-4627-a5b4-e21661ecdf71">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="ad3a6eef-6b79-4934-87cd-afa0209adf58">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="adca564f-374e-42b2-80c3-e2cf4516cdb3">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="b05192e8-ccbf-4614-8059-233fb7113ff1">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="b56237cb-a3f8-482c-9541-0c6060aebfd7">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="d7c6b27d-c5b7-402e-be6c-725f6e02f2c7">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="de856803-4770-4e35-8409-88ea3ccf183b">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="e0a7eca2-67ad-4262-b465-e54e475e640f">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="eacaea05-67c7-4e7c-8d49-97e73c8f4b2f">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="f79f0453-8fea-439a-9f4a-ba8b5528714a">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="fc27aaf1-5f5d-421c-9108-3b42b37d70e9">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="ff038b7b-7162-4090-b338-7d61fe455d57">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-    </servers>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -468,6 +229,9 @@
       <method />
     </configuration>
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
       <method />
     </configuration>
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server" server_id="5e865590-7232-4c8f-b266-d4e634b8ecb4" server_name="web1-Earthquakes">
@@ -507,182 +271,247 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="848" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="22" width="1440" height="848" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20373027" sideWeight="0.67330676" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21101573" sideWeight="0.67330676" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="122" width="1240" height="645" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32669324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3286445" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32933334" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.properties" />
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USERS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="CHECK_NEW_TODO" value="true" />
     <option name="myTodoPanelSettings">
-      <value>
-        <are-packages-shown value="false" />
-        <are-modules-shown value="false" />
-        <flatten-packages value="false" />
-        <is-autoscroll-to-source value="false" />
-      </value>
+      <TodoPanelSettings />
     </option>
-    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
-    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
-    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
-    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
-    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
-    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
-    <option name="SHORT_DIFF_HORIZONTALLY" value="true" />
-    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
-    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
-    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
-    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
-    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
-    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
-    <option name="LIMIT_HISTORY" value="true" />
-    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
-    <option name="UPDATE_FILTER_SCOPE_NAME" />
-    <option name="USE_COMMIT_MESSAGE_MARGIN" value="false" />
-    <option name="COMMIT_MESSAGE_MARGIN_SIZE" value="72" />
-    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
-    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished version 1 of Earthquakes." />
-    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
-    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
-    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
-    <option name="ACTIVE_VCS_NAME" />
-    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
-    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
-    <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
-    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
-    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Finished version 1 of Earthquakes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished version 1 of Earthquakes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+    <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0">
+        <state line="17" column="36" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/Container.controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="560" selection-end="560" vertical-scroll-proportion="0.62109953" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sag/SagException.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sag/SagCouchException.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="18" selection-start="951" selection-end="951" vertical-scroll-proportion="0.32234958" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sag/httpAdapters/SagHTTPAdapter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="36" selection-start="2759" selection-end="2759" vertical-scroll-proportion="-18.25" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/Core_c.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="213" column="29" selection-start="5962" selection-end="5962" vertical-scroll-proportion="0.34383956" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sag/httpAdapters/SagNativeHTTPAdapter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="303" column="48" selection-start="9484" selection-end="9484" vertical-scroll-proportion="0.6879643" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/earthquakes.error">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="29" selection-start="190" selection-end="190" vertical-scroll-proportion="-4.375" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/includes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="887" selection-end="887" vertical-scroll-proportion="0.66810346" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sag/Sag.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="347" column="42" selection-start="9835" selection-end="9835" vertical-scroll-proportion="0.21229868" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/getTwitterUserTimeline.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="64" selection-start="893" selection-end="893" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="27" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="24" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
+        <state line="44" column="0" selection-start="560" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="765">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/credentials.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="167" selection-end="444" vertical-scroll-proportion="0.0">
+        <state line="27" column="0" selection-start="659" selection-end="659" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/includes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="1" selection-start="752" selection-end="752" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="555">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="1.9593023">
+        <state line="102" column="0" selection-start="3332" selection-end="3332" vertical-scroll-proportion="0.0" vertical-offset="905" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processEarthquakesCouch.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="2085">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="24" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="600" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/credentials.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="167" selection-end="444" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/getTwitterUserTimeline.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="64" selection-start="893" selection-end="893" vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="735" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="27" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sag/SagException.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sag/SagCouchException.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="18" selection-start="951" selection-end="951" vertical-scroll-proportion="0.32234958" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sag/httpAdapters/SagHTTPAdapter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="36" selection-start="2759" selection-end="2759" vertical-scroll-proportion="-18.25" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/Core_c.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="213" column="29" selection-start="5962" selection-end="5962" vertical-scroll-proportion="0.34383956" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sag/httpAdapters/SagNativeHTTPAdapter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="303" column="48" selection-start="9484" selection-end="9484" vertical-scroll-proportion="0.6879643" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/earthquakes.error">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sag/Sag.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="347" column="42" selection-start="9835" selection-end="9835" vertical-scroll-proportion="0.21229868" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/getTwitterUserTimeline.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="64" selection-start="893" selection-end="893" vertical-scroll-proportion="0.7705146" vertical-offset="16" max-vertical-offset="735" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processEarthquakesCouch.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="36" selection-start="1177" selection-end="1177" vertical-scroll-proportion="-16.25" vertical-offset="270" max-vertical-offset="2085">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="5" selection-start="208" selection-end="208" vertical-scroll-proportion="0.26712328" vertical-offset="0" max-vertical-offset="730" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="32" selection-start="260" selection-end="260" vertical-scroll-proportion="0.1849315" vertical-offset="0" max-vertical-offset="730" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mongotest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.49844238" vertical-offset="0" max-vertical-offset="963" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/Container.controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="0" selection-start="560" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/icons/quake.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/includes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="1" selection-start="752" selection-end="752" vertical-scroll-proportion="-16.25" vertical-offset="0" max-vertical-offset="555">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="40" selection-start="2751" selection-end="2751" vertical-scroll-proportion="-19.375" vertical-offset="870" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/credentials.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="659" selection-end="659" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/listFollowers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.058577407" vertical-offset="753" max-vertical-offset="1635">
           <folding />
         </state>
       </provider>
