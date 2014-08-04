@@ -25,3 +25,10 @@ $twitterCreds = array(
 	'accessToken' => '1414684496-mSv363PQskycDx6z9tWhsZ3ExNx64HwSifTFHmG',
 	'accessTokenSecret' => 'VW94uQPMn3WmurumLvFcqZOJ7Q9C8EXJ0avoBtHAHg'
 );
+
+$SoCaltwitterCreds = array(
+	'consumerKey' => 'tA0QIfBTtrIkh6jOo4DKnQNW7',
+	'consumerSecret' => 'hdFmuDv2eApSxK77WAouMsigw56f6WzTtIg1I456h5Jmd4tRe2',
+	'accessToken' => '2612506890-R8275okZWMixL4lcqokcx0FRpOKzutzjnCmgf64',
+	'accessTokenSecret' => 'uUwKSDoJtbf0gYXV8VAFrlGxnxZwuOAWYkbbzgLmemK2L'
+);

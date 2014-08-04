@@ -24,6 +24,9 @@ class processEarthquakes
 	{
 //		$this->_logger->error(time());
 
+		global $twitterCreds;
+		global $SoCaltwitterCreds;
+
 		$usgs = new USGS($this->_logger);
 		$earthquakes = $usgs->getEarthquakes();
 		$earthquakeArray = $earthquakes->features;
@@ -45,7 +48,12 @@ class processEarthquakes
 					try {
 						$collection->insert($earthquake);
 						$this->_logger->debug('Earthquake added: ' . $this->_earthquakeId);
-						$this->sendTweet($earthquake);
+						$this->sendTweet($earthquake, $twitterCreds);
+						$lat = $earthquake->geometry->coordinates[1];
+						$long = $earthquake->geometry->coordinates[0];
+						if (($lat >= 32 && $lat <= 35) && ($long >= -121 && $long <= -115.5)) {
+							$this->sendTweet($earthquake, $SoCaltwitterCreds);
+						}
 						$newEarthquakeCount++;
 					} catch (MongoException $e) {
 						$this->_logger->error('Problem with earthquake data: ' . $this->_earthquakeId . ', could not insert into database: ' . $e->getMessage());
@@ -64,10 +72,8 @@ class processEarthquakes
 		}
 	}
 
-	private function sendTweet($earthquake)
+	private function sendTweet($earthquake, $creds)
 	{
-		global $twitterCreds;
-
 		$magnitude = $earthquake->properties->mag;
 		$place = $earthquake->properties->place;
 		$time = date('n/j/y @ G:i:s', substr($earthquake->properties->time, 0, 10));
@@ -86,7 +92,7 @@ class processEarthquakes
 			'display_coordinates' => true
 		);
 
-		$twitter = new Twitter($twitterCreds['consumerKey'], $twitterCreds['consumerSecret'], $twitterCreds['accessToken'], $twitterCreds['accessTokenSecret']);
+		$twitter = new Twitter($creds['consumerKey'], $creds['consumerSecret'], $creds['accessToken'], $creds['accessTokenSecret']);
 		$response = $twitter->tweet($tweet);
 		$responseDecoded = json_decode($response, true);
 		$curlErrno = $responseDecoded['curlErrno'];

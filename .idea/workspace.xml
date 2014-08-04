@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b4e24c5-9e98-4194-832d-d90472bd9c33" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/listFollowers.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/processEarthquakes.php" afterPath="$PROJECT_DIR$/processEarthquakesCouch.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/Container.controller.php" afterPath="$PROJECT_DIR$/controllers/Container.controller.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/config.php" afterPath="$PROJECT_DIR$/config/config.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/credentials.php" afterPath="$PROJECT_DIR$/config/credentials.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/earthquakes.properties" afterPath="$PROJECT_DIR$/config/earthquakes.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/processEarthquakes.php" afterPath="$PROJECT_DIR$/processEarthquakes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -33,10 +27,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="processEarthquakes.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="processEarthquakes.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="40" selection-start="2751" selection-end="2751" vertical-scroll-proportion="-19.375" vertical-offset="870" max-vertical-offset="1635">
+            <state line="47" column="25" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.37413073" vertical-offset="436" max-vertical-offset="1725">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/config.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="32" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="315">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="USGS.controller.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="76" selection-start="261" selection-end="317" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="600">
               <folding />
             </state>
           </provider>
@@ -45,16 +57,16 @@
       <file leaf-file-name="credentials.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/credentials.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="0" selection-start="659" selection-end="659" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="435">
+            <state line="28" column="18" selection-start="660" selection-end="678" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="600">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="listFollowers.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="listFollowers.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/listFollowers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.058577407" vertical-offset="753" max-vertical-offset="1635">
+            <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.0" vertical-offset="795" max-vertical-offset="1635">
               <folding />
             </state>
           </provider>
@@ -86,20 +98,20 @@
         <option value="$PROJECT_DIR$/Twitter/oauthdamnit.php" />
         <option value="$PROJECT_DIR$/getTwitterUserTimeline.php" />
         <option value="$PROJECT_DIR$/controllers/USGS.controller.php" />
-        <option value="$PROJECT_DIR$/config/credentials.php" />
         <option value="$PROJECT_DIR$/processEarthquakesTest.php" />
         <option value="$PROJECT_DIR$/controllers/Container.controller.php" />
         <option value="$PROJECT_DIR$/config/config.php" />
         <option value="$PROJECT_DIR$/mongotest.php" />
         <option value="$PROJECT_DIR$/config/earthquakes.properties" />
-        <option value="$PROJECT_DIR$/processEarthquakes.php" />
         <option value="$PROJECT_DIR$/listFollowers.php" />
+        <option value="$PROJECT_DIR$/config/credentials.php" />
+        <option value="$PROJECT_DIR$/processEarthquakes.php" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
+    <option name="y" value="27" />
     <option name="width" value="1440" />
     <option name="height" value="848" />
   </component>
@@ -212,7 +224,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ReadeyFramework" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dbFramework" />
     <property name="FullScreen" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -271,10 +283,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="848" extended-state="6" />
+    <frame x="0" y="27" width="1440" height="848" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3252551" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -285,7 +297,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21101573" sideWeight="0.67330676" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22532189" sideWeight="0.67330676" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="122" width="1240" height="645" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -322,14 +334,49 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="36" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
+        <state line="53" column="93" selection-start="1369" selection-end="1369" vertical-scroll-proportion="0.0" vertical-offset="954" max-vertical-offset="1725">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/Container.controller.php">
+    <entry file="file://$PROJECT_DIR$/config/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="560" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="765">
+        <state line="13" column="32" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="315">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="76" selection-start="261" selection-end="317" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="600">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/credentials.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="18" selection-start="660" selection-end="678" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="600">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/listFollowers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.0" vertical-offset="795" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="48" selection-start="1113" selection-end="1113" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="76" selection-start="261" selection-end="317" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="600">
           <folding />
         </state>
       </provider>
@@ -341,18 +388,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/includes.php">
+    <entry file="file://$PROJECT_DIR$/listFollowers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="1" selection-start="752" selection-end="752" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="555">
+        <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.0" vertical-offset="795" max-vertical-offset="1635">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+    <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
+        <state line="89" column="40" selection-start="2751" selection-end="2751" vertical-scroll-proportion="0.0" vertical-offset="870" max-vertical-offset="1635">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/credentials.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="659" selection-end="659" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/listFollowers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.0" vertical-offset="753" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="36" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/Container.controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="0" selection-start="560" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="765" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/credentials.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="659" selection-end="659" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/includes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="1" selection-start="752" selection-end="752" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="555" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
@@ -364,16 +454,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
-          <folding />
-        </state>
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/processEarthquakesCouch.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="2085">
-          <folding />
-        </state>
+        <state line="102" column="5" selection-start="3522" selection-end="3522" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="2085" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
@@ -395,16 +481,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="27" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
-          <folding />
-        </state>
+        <state line="1" column="27" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Sag/SagException.php">
@@ -449,19 +531,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/processEarthquakesCouch.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="36" selection-start="1177" selection-end="1177" vertical-scroll-proportion="-16.25" vertical-offset="270" max-vertical-offset="2085">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="5" selection-start="208" selection-end="208" vertical-scroll-proportion="0.26712328" vertical-offset="0" max-vertical-offset="730" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="32" selection-start="260" selection-end="260" vertical-scroll-proportion="0.1849315" vertical-offset="0" max-vertical-offset="730" />
+        <state line="44" column="36" selection-start="1177" selection-end="1177" vertical-scroll-proportion="-16.25" vertical-offset="270" max-vertical-offset="2085" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mongotest.php">
@@ -471,16 +541,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/earthquakes.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
-          <folding />
-        </state>
+        <state line="1" column="26" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/Container.controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="560" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="765">
-          <folding />
-        </state>
+        <state line="44" column="0" selection-start="560" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="765" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/icons/quake.jpg">
@@ -490,28 +556,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/includes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="1" selection-start="752" selection-end="752" vertical-scroll-proportion="-16.25" vertical-offset="0" max-vertical-offset="555">
+        <state line="30" column="1" selection-start="752" selection-end="752" vertical-scroll-proportion="-16.25" vertical-offset="0" max-vertical-offset="555" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/listFollowers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.0" vertical-offset="795" max-vertical-offset="1635">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
+    <entry file="file://$PROJECT_DIR$/controllers/USGS.controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="40" selection-start="2751" selection-end="2751" vertical-scroll-proportion="-19.375" vertical-offset="870" max-vertical-offset="1635">
+        <state line="21" column="76" selection-start="261" selection-end="317" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="600">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="32" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="315">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/credentials.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="659" selection-end="659" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="435">
+        <state line="28" column="18" selection-start="660" selection-end="678" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="600">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/listFollowers.php">
+    <entry file="file://$PROJECT_DIR$/processEarthquakes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="45" selection-start="2017" selection-end="2032" vertical-scroll-proportion="0.058577407" vertical-offset="753" max-vertical-offset="1635">
+        <state line="47" column="25" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.37413073" vertical-offset="436" max-vertical-offset="1725">
           <folding />
         </state>
       </provider>
