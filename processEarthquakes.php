@@ -25,7 +25,11 @@ class processEarthquakes
 //		$this->_logger->error(time());
 
 		global $twitterCreds;
+		global $SanDiegoQuakesTwitterCreds;
 		global $SoCaltwitterCreds;
+		global $NorCaltwitterCreds;
+
+		$this->_logger->debug('Checking for earthquakes!');
 
 		$usgs = new USGS($this->_logger);
 		$earthquakes = $usgs->getEarthquakes();
@@ -48,11 +52,19 @@ class processEarthquakes
 					try {
 						$collection->insert($earthquake);
 						$this->_logger->debug('Earthquake added: ' . $this->_earthquakeId);
-						$this->sendTweet($earthquake, $twitterCreds);
+						$this->sendNotifications($earthquake, $twitterCreds);
 						$lat = $earthquake->geometry->coordinates[1];
 						$long = $earthquake->geometry->coordinates[0];
-						if (($lat >= 32 && $lat <= 35) && ($long >= -121 && $long <= -115.5)) {
-							$this->sendTweet($earthquake, $SoCaltwitterCreds);
+						$this->_logger->debug('Lat: ' . $lat . ' - Long: ' . $long);
+						if (($lat >= 32.53 && $lat <= 33.225) && ($long >= -117.42 && $long <= -116.67)) {
+							$this->sendNotifications($earthquake, $SanDiegoQuakesTwitterCreds);
+						}
+						if (($lat >= 32 && $lat <= 36) && ($long >= -122 && $long <= -114)) {
+							$this->sendNotifications($earthquake, $SoCaltwitterCreds);
+						}
+						if ((($lat >= 36 && $lat <= 43) && ($long >= -125 && $long <= -119)) ||
+							(($lat >= 36 && $lat <= 38) && ($long >= -119 && $long <= -116))) {
+							$this->sendNotifications($earthquake, $NorCaltwitterCreds);
 						}
 						$newEarthquakeCount++;
 					} catch (MongoException $e) {
@@ -68,11 +80,22 @@ class processEarthquakes
 
 		if ($newEarthquakeCount > 0) {
 			$earthquakeLabel = ($newEarthquakeCount == 1) ? 'earthquake' : 'earthquakes';
-			$this->_logger->info($newEarthquakeCount . ' new ' . $earthquakeLabel . ' added and reported.');
+			$this->_logger->debug($newEarthquakeCount . ' new ' . $earthquakeLabel . ' added and reported.');
 		}
 	}
 
-	private function sendTweet($earthquake, $creds)
+	private function sendMailGunEmail($subject, $text)
+	{
+		$mailGun = new MailGun($this->_logger);
+		$mailGun->setFrom('processor@everyearthquake.com');
+		$mailGun->setTo('david.barkman13@gmail.com');
+		$mailGun->setSubject($subject);
+		$mailGun->setText($text);
+		$mailResult = $mailGun->sendEmail();
+		$this->_logger->debug('MailGun Result: ' . $mailResult);
+	}
+
+	private function sendNotifications($earthquake, $creds)
 	{
 		$magnitude = $earthquake->properties->mag;
 		$place = $earthquake->properties->place;
@@ -82,8 +105,9 @@ class processEarthquakes
 		$long = $earthquake->geometry->coordinates[0];
 
 		$status = 'USGS reports a M' . $magnitude .  ' #earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
+		$completeStatus = $status . ' @ ' . $lat . ' ' . $long;
 
-		$this->_logger->debug('Tweeting this: ' . $status . ' @ ' . $lat . ' ' . $long);
+		$this->_logger->debug('Tweeting this: ' . $completeStatus);
 
 		$tweet = array(
 			'status' => $status,
@@ -100,11 +124,11 @@ class processEarthquakes
 		$httpCode = $curlInfo['http_code'];
 
 		if ($curlErrno != 0) {
-			$this->_logger->error('Twitter post failed again for earthquake: ' . $earthquake->id . ' - Curl error: ' . $curlErrno);
+			$this->_logger->error('Twitter post (' . $creds['who'] . ') failed again for earthquake: ' . $earthquake->id . ' - Curl error: ' . $curlErrno);
 		} else if ($httpCode != 200) {
-			$this->_logger->error('Twitter post failed again for earthquake: ' . $earthquake->id . ' - Twitter error: ' . $httpCode);
+			$this->_logger->error('Twitter post  (' . $creds['who'] . ') failed again for earthquake: ' . $earthquake->id . ' - Twitter error: ' . $httpCode);
 		} else {
-			$this->_logger->info('Tweet sent for: Earthquake: ' . $earthquake->id);
+			$this->_logger->debug('Tweet  (' . $creds['who'] . ') sent for: Earthquake: ' . $earthquake->id);
 		}
 	}
 }

@@ -24,11 +24,6 @@ class USGS extends Curl
 		$url = $baseUrl;
 		$this->_logger->debug('USGS URL: ' . $url);
 
-		return json_decode(self::runCurl('GET', $url));
-	}
-
-	protected function runCurl($requestMethod, $url)
-	{
-		return parent::runCurl($requestMethod, $url);
+		return json_decode(self::runCurl('GET', $url, null, null, null));
 	}
 }
