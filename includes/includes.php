@@ -10,7 +10,7 @@ require_once dirname(__FILE__) . '/../config/config.php';
 require_once dirname(__FILE__) . '/../config/credentials.php';
 
 function autoloaddbFramework($className) {
-    $filename = '/srv/http/dbFramework/controllers/' . $className . ".class.php";
+	$filename = dirname(__FILE__) . '/../../dbFramework/controllers/' . $className . ".class.php";
     if (is_readable($filename)) {
 		require_once $filename;
     }

@@ -11,6 +11,8 @@ class EarthquakesProperties extends Properties
 	private $_propertiesFile;
 	const PROP_LOGFILE = "earthquakes.log.file";
 	const PROP_LOGLEVEL = "earthquakes.log.level";
+	const PROP_ACTION_STORE = "earthquakes.action.store";
+	const PROP_ACTION_NOTIFY = "earthquakes.action.notify";
 
 	public function __construct()
 	{
@@ -62,5 +64,15 @@ class EarthquakesProperties extends Properties
 	public function setLogLevelString($value)
 	{
 		$this->setProperty(self::PROP_LOGLEVEL, $value);
+	}
+
+	public function getStoreValue()
+	{
+		return parent::getProperty(self::PROP_ACTION_STORE);
+	}
+
+	public function getNotifyValue()
+	{
+		return parent::getProperty(self::PROP_ACTION_NOTIFY);
 	}
 }

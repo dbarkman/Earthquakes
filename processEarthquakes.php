@@ -5,22 +5,28 @@ session_start();
 require_once dirname(__FILE__) . '/includes/includes.php';
 
 $peq = new processEarthquakes();
-$peq->getEarthquakes();
 
 class processEarthquakes
 {
-	private $_logger;
-	private $_earthquakeId;
 	private $_container;
+	private $_logger;
+	private $_db;
+	private $_earthquakeId;
 
 	public function __construct()
 	{
 		$this->_container = new Container();
-
 		$this->_logger = $this->_container->getLogger();
+		$this->_db = $this->_container->getMySQLDBConnect();
+
+		$properties = $this->_container->getProperties();
+		$store = $properties->getStoreValue();
+		$notify = $properties->getNotifyValue();
+
+		$this->getEarthquakes($store, $notify);
 	}
 
-	public function getEarthquakes()
+	public function getEarthquakes($store, $notify)
 	{
 //		$this->_logger->error(time());
 
@@ -35,39 +41,40 @@ class processEarthquakes
 		$earthquakes = $usgs->getEarthquakes();
 		$earthquakeArray = $earthquakes->features;
 
-		$collection = $this->_container->getMongoDBConnect();
-
 		$newEarthquakeCount = 0;
 
-		foreach ($earthquakeArray as $earthquake) {
+		foreach ($earthquakeArray as $earthquakeElement) {
 
-			if (!empty($earthquake->id)) {
-				$this->_earthquakeId = $earthquake->id;
-				$criteria = array('id' => $this->_earthquakeId);
-				$count = $collection->count($criteria);
+			if (!empty($earthquakeElement->id)) {
+				$earthquake = new Earthquake($this->_logger, $this->_db, $earthquakeElement);
+				$this->_earthquakeId = $earthquake->getId();
 
-				if ($count > 0) {
+				if ($earthquake->getEarthquakeExists() === TRUE) {
 					$this->_logger->debug('Duplicate earthquake');
 				} else {
 					try {
-						$collection->insert($earthquake);
-						$this->_logger->debug('Earthquake added: ' . $this->_earthquakeId);
-						$this->sendNotifications($earthquake, $twitterCreds);
-						$lat = $earthquake->geometry->coordinates[1];
-						$long = $earthquake->geometry->coordinates[0];
-						$this->_logger->debug('Lat: ' . $lat . ' - Long: ' . $long);
-						if (($lat >= 32.53 && $lat <= 33.225) && ($long >= -117.42 && $long <= -116.67)) {
-							$this->sendNotifications($earthquake, $SanDiegoQuakesTwitterCreds);
+						if ($store === "TRUE") {
+							$earthquake->saveEarthquake();
+							$this->_logger->debug('Earthquake added: ' . $this->_earthquakeId);
 						}
-						if (($lat >= 32 && $lat <= 36) && ($long >= -122 && $long <= -114)) {
-							$this->sendNotifications($earthquake, $SoCaltwitterCreds);
-						}
-						if ((($lat >= 36 && $lat <= 43) && ($long >= -125 && $long <= -119)) ||
-							(($lat >= 36 && $lat <= 38) && ($long >= -119 && $long <= -116))) {
-							$this->sendNotifications($earthquake, $NorCaltwitterCreds);
+						if ($notify === "TRUE") {
+							$this->sendNotifications($earthquakeElement, $twitterCreds, TRUE);
+							$lat = $earthquake->getLatitude();
+							$long = $earthquake->getLongitude();
+							$this->_logger->debug('Lat: ' . $lat . ' - Long: ' . $long);
+							if (($lat >= 32.53 && $lat <= 33.225) && ($long >= -117.42 && $long <= -116.67)) {
+								$this->sendNotifications($earthquakeElement, $SanDiegoQuakesTwitterCreds);
+							}
+							if (($lat >= 32 && $lat <= 36) && ($long >= -122 && $long <= -114)) {
+								$this->sendNotifications($earthquakeElement, $SoCaltwitterCreds);
+							}
+							if ((($lat >= 36 && $lat <= 43) && ($long >= -125 && $long <= -119)) ||
+								(($lat >= 36 && $lat <= 38) && ($long >= -119 && $long <= -116))) {
+								$this->sendNotifications($earthquakeElement, $NorCaltwitterCreds);
+							}
 						}
 						$newEarthquakeCount++;
-					} catch (MongoException $e) {
+					} catch (mysqli_sql_exception $e) {
 						$this->_logger->error('Problem with earthquake data: ' . $this->_earthquakeId . ', could not insert into database: ' . $e->getMessage());
 					} catch (Exception $e) {
 						$this->_logger->error('Extensive problems with earthquake data: ' . $this->_earthquakeId . ', could not insert into database: ' . $e->getMessage());
@@ -95,7 +102,7 @@ class processEarthquakes
 		$this->_logger->debug('MailGun Result: ' . $mailResult);
 	}
 
-	private function sendNotifications($earthquake, $creds)
+	private function sendNotifications($earthquake, $creds, $sendEmail = FALSE)
 	{
 		$magnitude = $earthquake->properties->mag;
 		$place = $earthquake->properties->place;
@@ -115,6 +122,8 @@ class processEarthquakes
 			'long' => $long,
 			'display_coordinates' => true
 		);
+
+		if ($sendEmail == TRUE && $magnitude >= 6) $this->sendMailGunEmail("A Big One! - M" . $magnitude . " - " . $earthquake->id, $completeStatus);
 
 		$twitter = new Twitter($creds['consumerKey'], $creds['consumerSecret'], $creds['accessToken'], $creds['accessTokenSecret']);
 		$response = $twitter->tweet($tweet);

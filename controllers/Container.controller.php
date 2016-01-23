@@ -12,12 +12,22 @@ class Container
 
 	private $_logFile;
 	private $_logLevel;
+	private $_properties;
 
 	public function __construct()
 	{
-		$properties = new EarthquakesProperties();
-		$this->_logFile = $properties->getLogFile();
-		$this->_logLevel = $properties->getLogLevel();
+		$this->_properties = new EarthquakesProperties();
+		$this->_logFile = $this->_properties->getLogFile();
+		$this->_logLevel = $this->_properties->getLogLevel();
+	}
+
+	public function getProperties()
+	{
+		if (isset(self::$shared['properties'])) {
+			return self::$shared['properties'];
+		}
+
+		return self::$shared['properties'] = $this->_properties;
 	}
 
 	public function getLogger()
@@ -31,15 +41,16 @@ class Container
 		return self::$shared['logger'] = $logger;
 	}
 
-	public function getMongoDBConnect()
+	public function getMySQLDBConnect()
 	{
-		if (isset(self::$shared['mongoDBConnect'])) {
-			return self::$shared['mongoDBConnect'];
+		if (isset(self::$shared['mysqlDBConnect'])) {
+			return self::$shared['mysqlDBConnect'];
 		}
 
-		global $earthquakesMongoDBLogin;
-		$mongoDBConnect = new MongoDBConnect($earthquakesMongoDBLogin['username'], $earthquakesMongoDBLogin['password'], $earthquakesMongoDBLogin['server'], $earthquakesMongoDBLogin['database'], $earthquakesMongoDBLogin['collection']);
+		global $earthquakesDBLogin;
+		$mysqlDBConnect = new MySQLConnect($earthquakesDBLogin['server'], $earthquakesDBLogin['username'], $earthquakesDBLogin['password'], $earthquakesDBLogin['database']);
+		$mysqlConnection = $mysqlDBConnect->db;
 
-		return self::$shared['mongoDBConnect'] = $mongoDBConnect->getCollection();
+		return self::$shared['mysqlDBConnect'] = $mysqlConnection;
 	}
 }
