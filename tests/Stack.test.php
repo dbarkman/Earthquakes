@@ -6,6 +6,7 @@
  * Date: 2/16/16
  * Time: 12:58 PM
  */
+
 class StackTest extends PHPUnit_Framework_TestCase
 {
 	public function testPushAndPop()
