@@ -21,6 +21,5 @@ class CountTest extends PHPUnit_Framework_TestCase
 
 		$count += 1;
 		$this->assertEquals(3, $count);
-		$this->assertEquals(4, $count);
 	}
 }
