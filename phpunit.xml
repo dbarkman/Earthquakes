@@ -40,5 +40,6 @@
 
     <logging>
         <log type="coverage-text" target="test-reports/coverage.txt" showUncoveredFiles="true"/>
+        <log type="junit" target="test-reports/phpunit.xml" logIncompleteSkipped="true"/>
     </logging>
 </phpunit>
