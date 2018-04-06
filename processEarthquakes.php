@@ -28,8 +28,6 @@ class processEarthquakes
 
 	public function getEarthquakes($store, $notify)
 	{
-//		$this->_logger->error(time());
-
 		global $twitterCreds;
 		global $SanDiegoQuakesTwitterCreds;
 		global $SoCaltwitterCreds;
@@ -55,6 +53,8 @@ class processEarthquakes
 					try {
 						if ($store === "TRUE") {
 							$earthquake->saveEarthquake();
+							$firebase = new Firebase($this->_logger);
+							$firebase->saveEarthquake($earthquakeElement);
 							$this->_logger->debug('Earthquake added: ' . $this->_earthquakeId);
 						}
 						if ($notify === "TRUE") {

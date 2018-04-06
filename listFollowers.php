@@ -8,10 +8,13 @@ $gef = new getEarthquakeFollowers();
 $nextCursorString = $gef->getFollowers();
 echo 'Verified Users: ' . count($gef->verifiedUsers) . PHP_EOL;
 echo 'Unverified Users: ' . count($gef->unVerifiedUsers) . PHP_EOL;
+$gef->getRateLimitStatus();
 while ($nextCursorString != "0") {
+	sleep(61);
 	$nextCursorString = $gef->getFollowers($nextCursorString);
 	echo 'Verified Users: ' . count($gef->verifiedUsers) . PHP_EOL;
 	echo 'Unverified Users: ' . count($gef->unVerifiedUsers) . PHP_EOL;
+	$gef->getRateLimitStatus();
 }
 
 $verifiedUsersFile = 'verifiedUseres.txt';
