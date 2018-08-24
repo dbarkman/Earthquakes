@@ -22,7 +22,7 @@ class Firebase extends Curl
 		$earthquakeId = $earthquake->id;
 		$rawEarthquake = json_encode($earthquake);
 		$url = 'https://earthquakes-2a5bd.firebaseio.com/earthquakes/' . $earthquakeId . '.json';
-		$this->_logger->debug('USGS URL: ' . $url);
+		$this->_logger->debug('Firebase URL: ' . $url);
 
 		return json_decode(self::runCurl('PUTJson', $url, null, null, $rawEarthquake));
 	}

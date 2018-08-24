@@ -1,5 +1,8 @@
 <?php
 
+// VERSION 1.1.0
+// BUILD 20180824-001
+
 session_start();
 
 require_once dirname(__FILE__) . '/includes/includes.php';
@@ -55,23 +58,13 @@ class processEarthquakes
 							$earthquake->saveEarthquake();
 							$firebase = new Firebase($this->_logger);
 							$firebase->saveEarthquake($earthquakeElement);
-							$this->_logger->debug('Earthquake added: ' . $this->_earthquakeId);
+							$this->_logger->info('Earthquake added: ' . $this->_earthquakeId);
 						}
 						if ($notify === "TRUE") {
-							$this->sendNotifications($earthquakeElement, $twitterCreds, TRUE);
+							$this->sendNotifications($earthquakeElement, $twitterCreds, FALSE);
 							$lat = $earthquake->getLatitude();
 							$long = $earthquake->getLongitude();
-							$this->_logger->debug('Lat: ' . $lat . ' - Long: ' . $long);
-							if (($lat >= 32.53 && $lat <= 33.225) && ($long >= -117.42 && $long <= -116.67)) {
-								$this->sendNotifications($earthquakeElement, $SanDiegoQuakesTwitterCreds);
-							}
-							if (($lat >= 32 && $lat <= 36) && ($long >= -122 && $long <= -114)) {
-								$this->sendNotifications($earthquakeElement, $SoCaltwitterCreds);
-							}
-							if ((($lat >= 36 && $lat <= 43) && ($long >= -125 && $long <= -119)) ||
-								(($lat >= 36 && $lat <= 38) && ($long >= -119 && $long <= -116))) {
-								$this->sendNotifications($earthquakeElement, $NorCaltwitterCreds);
-							}
+							$this->_logger->info('Lat: ' . $lat . ' - Long: ' . $long);
 						}
 						$newEarthquakeCount++;
 					} catch (mysqli_sql_exception $e) {
@@ -91,18 +84,7 @@ class processEarthquakes
 		}
 	}
 
-	private function sendMailGunEmail($subject, $text)
-	{
-		$mailGun = new MailGun($this->_logger);
-		$mailGun->setFrom('processor@everyearthquake.com');
-		$mailGun->setTo('david.barkman13@gmail.com');
-		$mailGun->setSubject($subject);
-		$mailGun->setText($text);
-		$mailResult = $mailGun->sendEmail();
-		$this->_logger->debug('MailGun Result: ' . $mailResult);
-	}
-
-	private function sendNotifications($earthquake, $creds, $sendEmail = FALSE)
+	private function sendNotifications($earthquake, $creds, $sendEmail = FALSE, $location = null)
 	{
 		$magnitude = $earthquake->properties->mag;
 		$place = $earthquake->properties->place;
@@ -111,10 +93,12 @@ class processEarthquakes
 		$lat = $earthquake->geometry->coordinates[1];
 		$long = $earthquake->geometry->coordinates[0];
 
-		$status = 'USGS reports a M' . $magnitude .  ' #earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
+		$location = ($location == null) ? "" : $location . " ";
+
+		$status = 'USGS reports a ' . $location . 'M' . $magnitude .  ' #earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
 		$completeStatus = $status . ' @ ' . $lat . ' ' . $long;
 
-		$this->_logger->debug('Tweeting this: ' . $completeStatus);
+		$this->_logger->info('Tweeting this: ' . $completeStatus);
 
 		$tweet = array(
 			'status' => $status,
@@ -123,7 +107,7 @@ class processEarthquakes
 			'display_coordinates' => true
 		);
 
-		if ($sendEmail == TRUE && $magnitude >= 6) $this->sendMailGunEmail("A Big One! - M" . $magnitude . " - " . $earthquake->id, $completeStatus);
+        if ($sendEmail == TRUE && $magnitude >= 6) $this->sendMailGunEmail("A Big One! - M" . $magnitude . " - " . $earthquake->id, $completeStatus);
 
 		$twitter = new Twitter($creds['consumerKey'], $creds['consumerSecret'], $creds['accessToken'], $creds['accessTokenSecret']);
 		$response = $twitter->tweet($tweet);
@@ -140,4 +124,15 @@ class processEarthquakes
 			$this->_logger->debug('Tweet  (' . $creds['who'] . ') sent for: Earthquake: ' . $earthquake->id);
 		}
 	}
+
+    private function sendMailGunEmail($subject, $text)
+    {
+        $mailGun = new MailGun($this->_logger);
+        $mailGun->setFrom('processor@everyearthquake.com');
+        $mailGun->setTo('david.barkman13@gmail.com');
+        $mailGun->setSubject($subject);
+        $mailGun->setText($text);
+        $mailResult = $mailGun->sendEmail();
+        $this->_logger->debug('MailGun Result: ' . $mailResult);
+    }
 }
