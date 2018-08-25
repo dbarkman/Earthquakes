@@ -1,7 +1,7 @@
 <?php
 
-// VERSION 1.1.0
-// BUILD 20180824-001
+// VERSION 1.1.1
+// BUILD 20180824-002
 
 session_start();
 
@@ -32,11 +32,8 @@ class processEarthquakes
 	public function getEarthquakes($store, $notify)
 	{
 		global $twitterCreds;
-		global $SanDiegoQuakesTwitterCreds;
-		global $SoCaltwitterCreds;
-		global $NorCaltwitterCreds;
 
-		$this->_logger->debug('Checking for earthquakes!');
+		$this->_logger->info('Checking for earthquakes!');
 
 		$usgs = new USGS($this->_logger);
 		$earthquakes = $usgs->getEarthquakes();
@@ -81,7 +78,9 @@ class processEarthquakes
 		if ($newEarthquakeCount > 0) {
 			$earthquakeLabel = ($newEarthquakeCount == 1) ? 'earthquake' : 'earthquakes';
 			$this->_logger->debug($newEarthquakeCount . ' new ' . $earthquakeLabel . ' added and reported.');
-		}
+		} else {
+		    $this->_logger->info('No new earthquakes.');
+        }
 	}
 
 	private function sendNotifications($earthquake, $creds, $sendEmail = FALSE, $location = null)

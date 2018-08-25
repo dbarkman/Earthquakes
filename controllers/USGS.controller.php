@@ -19,11 +19,11 @@ class USGS extends Curl
 
 	public function getEarthquakes()
 	{
-		$baseUrl = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
-//		$baseUrl = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
+		$baseUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
+//		$baseUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
 		$url = $baseUrl;
 		$this->_logger->debug('USGS URL: ' . $url);
 
-		return json_decode(self::runCurl('GET', $url, null, null, null));
+        return json_decode(self::runCurl('GET', $url, null, null, null));
 	}
 }
