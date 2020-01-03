@@ -37,6 +37,7 @@ class processEarthquakes
 
 		$usgs = new USGS($this->_logger);
 		$earthquakes = $usgs->getEarthquakes();
+		var_dump($earthquakes);
 		$earthquakeArray = $earthquakes->features;
 
 		$newEarthquakeCount = 0;
