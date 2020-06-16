@@ -13,6 +13,10 @@ class EarthquakesProperties extends Properties
 	const PROP_LOGLEVEL = "earthquakes.log.level";
 	const PROP_ACTION_STORE = "earthquakes.action.store";
 	const PROP_ACTION_NOTIFY = "earthquakes.action.notify";
+	const PROP_URL_HOUR = "earthquakes.url.hour";
+	const PROP_URL_DAY = "earthquakes.url.day";
+    const PROP_URL_QUERY = "earthquakes.url.query";
+    const PROP_URL_COUNT = "earthquakes.url.count";
 
 	public function __construct()
 	{
@@ -75,4 +79,24 @@ class EarthquakesProperties extends Properties
 	{
 		return parent::getProperty(self::PROP_ACTION_NOTIFY);
 	}
+
+    public function getUrlHour()
+    {
+        return parent::getProperty(self::PROP_URL_HOUR);
+    }
+
+    public function getUrlDay()
+    {
+        return parent::getProperty(self::PROP_URL_DAY);
+    }
+
+    public function getUrlQuery()
+    {
+        return parent::getProperty(self::PROP_URL_QUERY);
+    }
+
+    public function getUrlCount()
+    {
+        return parent::getProperty(self::PROP_URL_COUNT);
+    }
 }

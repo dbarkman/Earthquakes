@@ -16,6 +16,10 @@ class Earthquake
 	private $_timezone;
 	private $_url;
 	private $_detailUrl;
+    private $_felt;
+    private $_cdi;
+    private $_mmi;
+    private $_alert;
 	private $_status;
 	private $_tsunami;
 	private $_sig;
@@ -31,6 +35,7 @@ class Earthquake
 	private $_magType;
 	private $_type;
 	private $_title;
+	private $_geometryType;
 	private $_latitude;
 	private $_longitude;
 	private $_depth;
@@ -38,38 +43,48 @@ class Earthquake
 	public function __construct($logger, $db, $earthquake) {
 		$this->_logger = $logger;
 		$this->_db = $db;
+
+        $latitude = $earthquake->geometry->coordinates[1];
+        $longitude = $earthquake->geometry->coordinates[0];
+        $depth = $earthquake->geometry->coordinates[2];
+
 		$this->_id = $earthquake->id;
-		$this->_magnitude = $earthquake->properties->mag;
-		$this->_place = $earthquake->properties->place;
-		$this->_time = $earthquake->properties->time;
-		$this->_updated = $earthquake->properties->updated;
-		$this->_timezone = $earthquake->properties->tz;
-		$this->_url = $earthquake->properties->url;
-		$this->_detailUrl = $earthquake->properties->detail;
-		$this->_status = $earthquake->properties->status;
-		$this->_tsunami = $earthquake->properties->tsunami;
-		$this->_sig = $earthquake->properties->sig;
-		$this->_net = $earthquake->properties->net;
-		$this->_code = $earthquake->properties->code;
-		$this->_ids = $earthquake->properties->ids;
-		$this->_sources = $earthquake->properties->sources;
-		$this->_types = $earthquake->properties->types;
-		$this->_nst = $earthquake->properties->nst;
-		$this->_dmin = $earthquake->properties->dmin;
-		$this->_rms = $earthquake->properties->rms;
-		$this->_gap = $earthquake->properties->gap;
-		$this->_magType = $earthquake->properties->magType;
-		$this->_type = $earthquake->properties->type;
-		$this->_title = $earthquake->properties->title;
-		$this->_latitude = $earthquake->geometry->coordinates[1];
-		$this->_longitude = $earthquake->geometry->coordinates[0];
-		$this->_depth = $earthquake->geometry->coordinates[2];
+		$this->_magnitude = (isset($earthquake->properties->mag)) ? $earthquake->properties->mag : 0.0;
+		$this->_place = (isset($earthquake->properties->place)) ? mysqli_real_escape_string($this->_db, $earthquake->properties->place) : '';
+		$this->_time = (isset($earthquake->properties->time)) ? $earthquake->properties->time : 0;
+		$this->_updated = (isset($earthquake->properties->updated)) ? $earthquake->properties->updated : 0;
+		$this->_timezone = (isset($earthquake->properties->tz)) ? $earthquake->properties->tz : 0;
+		$this->_url = (isset($earthquake->properties->url)) ? $earthquake->properties->url : '';
+        $this->_detailUrl = (isset($earthquake->properties->detail)) ? $earthquake->properties->detail : '';
+        $this->_felt = (isset($earthquake->properties->felt)) ? $earthquake->properties->felt : 0;
+        $this->_cdi = (isset($earthquake->properties->cdi)) ? $earthquake->properties->cdi : 0.0;
+        $this->_mmi = (isset($earthquake->properties->mmi)) ? $earthquake->properties->mmi : 0.0;
+        $this->_alert = (isset($earthquake->properties->alert)) ? $earthquake->properties->alert : '';
+		$this->_status = (isset($earthquake->properties->status)) ? $earthquake->properties->status : '';
+		$this->_tsunami = (isset($earthquake->properties->tsunami)) ? $earthquake->properties->tsunami : 0;
+		$this->_sig = (isset($earthquake->properties->sig)) ? $earthquake->properties->sig : 0;
+		$this->_net = (isset($earthquake->properties->net)) ? $earthquake->properties->net : '';
+		$this->_code = (isset($earthquake->properties->code)) ? $earthquake->properties->code : '';
+		$this->_ids = (isset($earthquake->properties->ids)) ? $earthquake->properties->ids : '';
+		$this->_sources = (isset($earthquake->properties->sources)) ? $earthquake->properties->sources : '';
+		$this->_types = (isset($earthquake->properties->types)) ? $earthquake->properties->types : '';
+		$this->_nst = (isset($earthquake->properties->nst)) ? $earthquake->properties->nst : 0;
+		$this->_dmin = (isset($earthquake->properties->dmin)) ? $earthquake->properties->dmin : 0.0;
+		$this->_rms = (isset($earthquake->properties->rms)) ? $earthquake->properties->rms : 0.0;
+		$this->_gap = (isset($earthquake->properties->gap)) ? $earthquake->properties->gap : 0.0;
+		$this->_magType = (isset($earthquake->properties->magType)) ? $earthquake->properties->magType : '';
+		$this->_type = (isset($earthquake->properties->type)) ? $earthquake->properties->type : '';
+		$this->_title = (isset($earthquake->properties->title)) ? mysqli_real_escape_string($this->_db, $earthquake->properties->title) : '';
+        $this->_geometryType = (isset($earthquake->geometry->type)) ? $earthquake->geometry->type : '';
+		$this->_latitude = (isset($latitude)) ? $latitude : 0.0;
+		$this->_longitude = (isset($longitude)) ? $longitude : 0.0;
+		$this->_depth = (isset($depth)) ? $depth : 0.0;
 	}
 
-	public function saveEarthquake() {
+	public function saveEarthquake($table) {
 		$sql = "
 			INSERT INTO
-				earthquakes
+				$table
 			SET
 				id = '$this->_id',
 				magnitude = '$this->_magnitude',
@@ -79,6 +94,10 @@ class Earthquake
 				timezone = '$this->_timezone',
 				url = '$this->_url',
 				detailUrl = '$this->_detailUrl',
+				felt = '$this->_felt',
+				cdi = '$this->_cdi',
+				mmi = '$this->_mmi',
+				alert = '$this->_alert',
 				status = '$this->_status',
 				tsunami = '$this->_tsunami',
 				sig = '$this->_sig',
@@ -94,6 +113,7 @@ class Earthquake
 				magType = '$this->_magType',
 				type = '$this->_type',
 				title = '$this->_title',
+				geometryType = '$this->_geometryType',
 				latitude = '$this->_latitude',
 				longitude = '$this->_longitude',
 				depth = '$this->_depth'
@@ -105,16 +125,18 @@ class Earthquake
 		if ($rowsAffected === 1) {
 			return TRUE;
 		} else {
+            $errors = $this->_db->error;
+            $this->_logger->info('Database error: ' . $errors);
 			return FALSE;
 		}
 	}
 
-	public function getEarthquakeExists() {
+	public function getEarthquakeExists($table) {
 		$sql = "
 			SELECT
 				*
 			FROM
-				earthquakes
+				$table
 			WHERE
 				id = '$this->_id'
 		";
@@ -241,23 +263,87 @@ class Earthquake
 		$this->_url = $url;
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getDetailUrl()
-	{
-		return $this->_detailUrl;
-	}
+    /**
+     * @return mixed
+     */
+    public function getDetailUrl()
+    {
+        return $this->_detailUrl;
+    }
 
-	/**
-	 * @param mixed $detailUrl
-	 */
-	public function setDetailUrl($detailUrl)
-	{
-		$this->_detailUrl = $detailUrl;
-	}
+    /**
+     * @param mixed $detailUrl
+     */
+    public function setDetailUrl($detailUrl)
+    {
+        $this->_detailUrl = $detailUrl;
+    }
 
-	/**
+    /**
+     * @return mixed
+     */
+    public function getFelt()
+    {
+        return $this->_felt;
+    }
+
+    /**
+     * @param mixed $felt
+     */
+    public function setFelt($felt)
+    {
+        $this->_felt = $felt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCdi()
+    {
+        return $this->_cdi;
+    }
+
+    /**
+     * @param mixed $cdi
+     */
+    public function setCdi($cdi)
+    {
+        $this->_cdi = $cdi;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMmi()
+    {
+        return $this->_mmi;
+    }
+
+    /**
+     * @param mixed $mmi
+     */
+    public function setMmi($mmi)
+    {
+        $this->_mmi = $mmi;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getalert()
+    {
+        return $this->_alert;
+    }
+
+    /**
+     * @param mixed $alert
+     */
+    public function setAlert($alert)
+    {
+        $this->_alert = $alert;
+    }
+
+    /**
 	 * @return mixed
 	 */
 	public function getStatus()
@@ -481,23 +567,39 @@ class Earthquake
 		$this->_type = $type;
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getTitle()
-	{
-		return $this->_title;
-	}
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->_title;
+    }
 
-	/**
-	 * @param mixed $title
-	 */
-	public function setTitle($title)
-	{
-		$this->_title = $title;
-	}
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->_title = $title;
+    }
 
-	/**
+    /**
+     * @return mixed
+     */
+    public function getGeometryType()
+    {
+        return $this->_geometryType;
+    }
+
+    /**
+     * @param mixed $geometryType
+     */
+    public function setGeometryType($geometryType)
+    {
+        $this->_geometryType = $geometryType;
+    }
+
+    /**
 	 * @return mixed
 	 */
 	public function getLatitude()
@@ -544,5 +646,4 @@ class Earthquake
 	{
 		$this->_depth = $depth;
 	}
-
 }

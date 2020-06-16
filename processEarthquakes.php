@@ -14,6 +14,7 @@ class processEarthquakes
 	private $_container;
 	private $_logger;
 	private $_db;
+    private $_table;
 	private $_earthquakeId;
 
 	public function __construct()
@@ -21,50 +22,53 @@ class processEarthquakes
 		$this->_container = new Container();
 		$this->_logger = $this->_container->getLogger();
 		$this->_db = $this->_container->getMySQLDBConnect();
+        $this->_table = 'earthquakes';
 
 		$properties = $this->_container->getProperties();
 		$store = $properties->getStoreValue();
 		$notify = $properties->getNotifyValue();
+		$urlHour = $properties->getUrlHour();
 
-		$this->getEarthquakes($store, $notify);
+		$this->getEarthquakes($store, $notify, $urlHour);
 	}
 
-	public function getEarthquakes($store, $notify)
+	public function getEarthquakes($store, $notify, $url)
 	{
 		global $twitterCreds;
 
 		$this->_logger->info('Checking for earthquakes!');
 
 		$usgs = new USGS($this->_logger);
-		$earthquakes = $usgs->getEarthquakes();
-		var_dump($earthquakes);
+        $earthquakes = $usgs->getEarthquakes($url);
 		$earthquakeArray = $earthquakes->features;
 
 		$newEarthquakeCount = 0;
+        $failedEarthquakeCount = 0;
 
 		foreach ($earthquakeArray as $earthquakeElement) {
-
 			if (!empty($earthquakeElement->id)) {
 				$earthquake = new Earthquake($this->_logger, $this->_db, $earthquakeElement);
 				$this->_earthquakeId = $earthquake->getId();
 
-				if ($earthquake->getEarthquakeExists() === TRUE) {
-					$this->_logger->debug('Duplicate earthquake');
+				if ($earthquake->getEarthquakeExists($this->_table) === TRUE) {
+					$this->_logger->debug('Duplicate earthquake: ' . $this->_earthquakeId);
 				} else {
 					try {
 						if ($store === "TRUE") {
-							$earthquake->saveEarthquake();
-							$firebase = new Firebase($this->_logger);
-							$firebase->saveEarthquake($earthquakeElement);
-							$this->_logger->info('Earthquake added: ' . $this->_earthquakeId);
+							if ($earthquake->saveEarthquake($this->_table)) {
+                                $this->_logger->info('Earthquake added: ' . $this->_earthquakeId);
+                                $newEarthquakeCount++;
+                            } else {
+                                $this->_logger->info('🤯 Earthquake NOT added: ' . $this->_earthquakeId);
+                                $failedEarthquakeCount++;
+                            }
 						}
 						if ($notify === "TRUE") {
-							$this->sendNotifications($earthquakeElement, $twitterCreds, FALSE);
+							$this->sendNotifications($earthquakeElement, $twitterCreds);
 							$lat = $earthquake->getLatitude();
 							$long = $earthquake->getLongitude();
-							$this->_logger->info('Lat: ' . $lat . ' - Long: ' . $long);
+							$this->_logger->debug('Lat: ' . $lat . ' - Long: ' . $long);
 						}
-						$newEarthquakeCount++;
 					} catch (mysqli_sql_exception $e) {
 						$this->_logger->error('Problem with earthquake data: ' . $this->_earthquakeId . ', could not insert into database: ' . $e->getMessage());
 					} catch (Exception $e) {
@@ -78,24 +82,32 @@ class processEarthquakes
 
 		if ($newEarthquakeCount > 0) {
 			$earthquakeLabel = ($newEarthquakeCount == 1) ? 'earthquake' : 'earthquakes';
-			$this->_logger->debug($newEarthquakeCount . ' new ' . $earthquakeLabel . ' added and reported.');
+			$this->_logger->info($newEarthquakeCount . ' new ' . $earthquakeLabel . ' added and reported.');
+            if ($failedEarthquakeCount > 0) {
+                $earthquakeLabel = ($failedEarthquakeCount == 1) ? 'earthquake' : 'earthquakes';
+                $this->_logger->info($failedEarthquakeCount . ' ' . $earthquakeLabel . ' failed.');
+            } else {
+                $this->_logger->info('No earthquakes failed database insert.');
+            }
 		} else {
 		    $this->_logger->info('No new earthquakes.');
         }
 	}
 
-	private function sendNotifications($earthquake, $creds, $sendEmail = FALSE, $location = null)
+	private function sendNotifications($earthquake, $creds, $location = null)
 	{
 		$magnitude = $earthquake->properties->mag;
 		$place = $earthquake->properties->place;
 		$time = date('n/j/y @ G:i:s', substr($earthquake->properties->time, 0, 10));
 		$url = $earthquake->properties->url;
+		$type = $earthquake->properties->type;
 		$lat = $earthquake->geometry->coordinates[1];
 		$long = $earthquake->geometry->coordinates[0];
+		$hashtag = str_replace(" ", "", $type);
 
 		$location = ($location == null) ? "" : $location . " ";
 
-		$status = 'USGS reports a ' . $location . 'M' . $magnitude .  ' #earthquake ' . $place . ' on ' . $time . ' UTC ' . $url . ' #quake';
+		$status = 'USGS reports a ' . $location . 'M' . $magnitude .  ' ' . $type . ', ' . $place . ' on ' . $time . ' UTC ' . $url . ' #' . $hashtag;
 		$completeStatus = $status . ' @ ' . $lat . ' ' . $long;
 
 		$this->_logger->info('Tweeting this: ' . $completeStatus);
@@ -106,8 +118,6 @@ class processEarthquakes
 			'long' => $long,
 			'display_coordinates' => true
 		);
-
-        if ($sendEmail == TRUE && $magnitude >= 6) $this->sendMailGunEmail("A Big One! - M" . $magnitude . " - " . $earthquake->id, $completeStatus);
 
 		$twitter = new Twitter($creds['consumerKey'], $creds['consumerSecret'], $creds['accessToken'], $creds['accessTokenSecret']);
 		$response = $twitter->tweet($tweet);
@@ -124,15 +134,4 @@ class processEarthquakes
 			$this->_logger->debug('Tweet  (' . $creds['who'] . ') sent for: Earthquake: ' . $earthquake->id);
 		}
 	}
-
-    private function sendMailGunEmail($subject, $text)
-    {
-        $mailGun = new MailGun($this->_logger);
-        $mailGun->setFrom('processor@everyearthquake.com');
-        $mailGun->setTo('david.barkman13@gmail.com');
-        $mailGun->setSubject($subject);
-        $mailGun->setText($text);
-        $mailResult = $mailGun->sendEmail();
-        $this->_logger->debug('MailGun Result: ' . $mailResult);
-    }
 }

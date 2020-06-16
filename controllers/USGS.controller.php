@@ -17,11 +17,8 @@ class USGS extends Curl
 		$this->_logger = $logger;
 	}
 
-	public function getEarthquakes()
+	public function getEarthquakes($url)
 	{
-		$baseUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
-//		$baseUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
-		$url = $baseUrl;
 		$this->_logger->debug('USGS URL: ' . $url);
 
         return json_decode(self::runCurl('GET', $url, null, null, null));

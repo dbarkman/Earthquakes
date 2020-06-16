@@ -32,13 +32,14 @@ class getTwitterUserTimeline
 
 		$twitter = new Twitter($twitterCreds['consumerKey'], $twitterCreds['consumerSecret'], $twitterCreds['accessToken'], $twitterCreds['accessTokenSecret']);
 		$timeline = json_decode($twitter->getStatuses($user));
+		$userInfo = json_decode($twitter->getUser($user));
 		if ($timeline === false) {
 			$this->_logger->error('Twitter get timeline failed');
 		} else {
 			foreach ($timeline as $tweet) {
 				echo strlen($tweet->text) . ' - ' . $tweet->text . PHP_EOL; #earthquake
 			}
-//			var_dump($timeline);
+			var_dump($userInfo);
 		}
 	}
 }
