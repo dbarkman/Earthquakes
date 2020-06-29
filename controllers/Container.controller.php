@@ -53,4 +53,15 @@ class Container
 
 		return self::$shared['mysqlDBConnect'] = $mysqlConnection;
 	}
+
+    public function getValidation()
+    {
+        if (isset(self::$shared['validation'])) {
+            return self::$shared['validation'];
+        }
+
+        $validation = new EarthquakesFrameworkValidation(self::$shared['logger']);
+
+        return self::$shared['validation'] = $validation;
+    }
 }

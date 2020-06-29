@@ -28,11 +28,14 @@ class processEarthquakes
 		$store = $properties->getStoreValue();
 		$notify = $properties->getNotifyValue();
 		$urlHour = $properties->getUrlHour();
+		$urlDay = $properties->getUrlDay();
+		$googleMapsKey = $properties->getKeyGoogleMaps();
+		$openCageKey = $properties->getKeyOpenCage();
 
-		$this->getEarthquakes($store, $notify, $urlHour);
+		$this->getEarthquakes($store, $notify, $urlDay, $openCageKey);
 	}
 
-	public function getEarthquakes($store, $notify, $url)
+	public function getEarthquakes($store, $notify, $url, $openCageKey)
 	{
 		global $twitterCreds;
 
@@ -54,7 +57,13 @@ class processEarthquakes
 					$this->_logger->debug('Duplicate earthquake: ' . $this->_earthquakeId);
 				} else {
 					try {
-						if ($store === "TRUE") {
+                        //run setup location here
+                        //run get location here
+                        //run setup date here
+                        $earthquake->setDate();
+                        $earthquake->setLocation();
+                        $earthquake->setOpenCageGeocode($openCageKey);
+                        if ($store === "TRUE") {
 							if ($earthquake->saveEarthquake($this->_table)) {
                                 $this->_logger->info('Earthquake added: ' . $this->_earthquakeId);
                                 $newEarthquakeCount++;
@@ -62,7 +71,9 @@ class processEarthquakes
                                 $this->_logger->info('🤯 Earthquake NOT added: ' . $this->_earthquakeId);
                                 $failedEarthquakeCount++;
                             }
-						}
+						} else {
+//                            $earthquake->dumpEarthquake();
+                        }
 						if ($notify === "TRUE") {
 							$this->sendNotifications($earthquakeElement, $twitterCreds);
 							$lat = $earthquake->getLatitude();

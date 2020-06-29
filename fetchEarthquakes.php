@@ -7,10 +7,10 @@ session_start();
 
 require_once dirname(__FILE__) . '/includes/includes.php';
 
-if (count($argv) < 3) {
+if (count($argv) < 5) {
     echo 'Include an arguments, start time and end time.' . "\n";
 } else {
-    $feq = new fetchEarthquakes($argv[1], $argv[2]);
+    $feq = new fetchEarthquakes($argv[1], $argv[2], $argv[3], $argv[4]);
 }
 
 class fetchEarthquakes
@@ -31,12 +31,12 @@ class fetchEarthquakes
     private $_apiCalls;
     private $_apiCallsFailed;
 
-	public function __construct($startTime, $endTime)
+	public function __construct($startTime, $endTime, $table, $function)
 	{
 		$this->_container = new Container();
 		$this->_logger = $this->_container->getLogger();
 		$this->_db = $this->_container->getMySQLDBConnect();
-		$this->_table = 'earthquakes';
+		$this->_table = $table;
 		$this->_countLimit = 20000;
 
 		$properties = $this->_container->getProperties();
@@ -52,7 +52,26 @@ class fetchEarthquakes
         $this->_apiCalls = 0;
         $this->_apiCallsFailed = 0;
 
-        $this->fetchEarthquakes($startTime, $endTime);
+        if ($function == 'fetch') {
+            $this->fetchEarthquakes($startTime, $endTime);
+        }
+        if ($function == 'setDate') {
+
+        }
+        if ($function == 'setLocation') {
+
+        }
+        if ($function == 'setCountry') {
+
+        }
+    }
+
+    public function setDate()
+    {
+        $count  = 1;
+        while ($count > 0) {
+
+        }
     }
 
     public function fetchEarthquakes($startTime, $endTime)
@@ -75,7 +94,11 @@ class fetchEarthquakes
             $endTime = $endDate->add($interval)->format('Y-m-d');
             if ($endTime > $this->_originalEndTime) $endTime = $this->_originalEndTime;
         }
+        $this->reportResults();
+    }
 
+    public function reportResults()
+    {
         $this->_logger->info($this->_totalEarthquakesProcessed . ' total earthquakes processed for the range of ' . $this->_originalStartTime . ' - ' . $this->_originalEndTime . '.');
         $this->_logger->info($this->_duplicateEarthquakes . ' earthquakes already existed in the database.');
         $this->_logger->info($this->_newEarthquakes . ' new earthquakes were added to the database.');

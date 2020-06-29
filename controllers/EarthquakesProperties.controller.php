@@ -17,6 +17,8 @@ class EarthquakesProperties extends Properties
 	const PROP_URL_DAY = "earthquakes.url.day";
     const PROP_URL_QUERY = "earthquakes.url.query";
     const PROP_URL_COUNT = "earthquakes.url.count";
+    const PROP_KEY_GOOGLEMAPS = "earthquakes.key.googlemaps";
+    const PROP_KEY_OPENCAGE = "earthquakes.key.opencage";
 
 	public function __construct()
 	{
@@ -98,5 +100,15 @@ class EarthquakesProperties extends Properties
     public function getUrlCount()
     {
         return parent::getProperty(self::PROP_URL_COUNT);
+    }
+
+    public function getKeyGoogleMaps()
+    {
+        return parent::getProperty(self::PROP_KEY_GOOGLEMAPS);
+    }
+
+    public function getKeyOpenCage()
+    {
+        return parent::getProperty(self::PROP_KEY_OPENCAGE);
     }
 }

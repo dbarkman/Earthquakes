@@ -2,19 +2,24 @@
 
 /**
  * Created by PhpStorm.
- * User: David
+ * User: David Barkman
  * Date: 1/22/16
  * Time: 12:19 PM
  */
 class Earthquake
 {
+    private $_logger;
+    private $_db;
 	private $_id;
 	private $_magnitude;
 	private $_place;
+	private $_location;
 	private $_time;
+	private $_date;
+	private $_diurnal;
 	private $_updated;
 	private $_timezone;
-	private $_url;
+    private $_url;
 	private $_detailUrl;
     private $_felt;
     private $_cdi;
@@ -81,15 +86,170 @@ class Earthquake
 		$this->_depth = (isset($depth)) ? $depth : 0.0;
 	}
 
-	public function saveEarthquake($table) {
-		$sql = "
+	public function setDate() {
+        $this->_date = Earthquakes::getDateFromTime($this->_time);
+    }
+
+    public function setLocation() {
+	    if (strpos($this->_place, 'of') != FALSE) {
+            $locationArray = explode('of', $this->_place);
+            $this->_location = trim($locationArray[1]);
+        } else {
+	        $this->_location = $this->_place;
+        }
+    }
+
+    public function setOpenCageGeocode($openCageKey)
+    {
+        $url = 'https://api.opencagedata.com/geocode/v1/json?q=' . $this->_latitude . '+' . $this->_longitude . '&key=' . $openCageKey;
+        $openCage = new OpenCage($this->_logger);
+        $geocode = $openCage->reverseGeocode($url);
+        if ($geocode->status->code == 200 && $geocode->total_results > 0) {
+            if (isset($geocode->results[0]->components)) {
+                $components = $geocode->results[0]->components;
+                $this->insertIntoLocationComponents($this->_id, null, null, $components);
+                if (isset($components->_category)) $this->insertIntoLocationComponents($this->_id, 'category', $components->_category);
+                if (isset($components->_type)) $this->insertIntoLocationComponents($this->_id, 'type', $components->_type);
+                if (isset($components->body_of_water)) $this->insertIntoLocationComponents($this->_id, 'body_of_water', $components->body_of_water);
+                if (isset($components->building)) $this->insertIntoLocationComponents($this->_id, 'building', $components->building);
+                if (isset($components->city)) $this->insertIntoLocationComponents($this->_id, 'city', $components->city);
+                if (isset($components->city_block)) $this->insertIntoLocationComponents($this->_id, 'city_block', $components->city_block);
+                if (isset($components->city_district)) $this->insertIntoLocationComponents($this->_id, 'city_district', $components->city_district);
+                if (isset($components->commercial)) $this->insertIntoLocationComponents($this->_id, 'commercial', $components->commercial);
+                if (isset($components->continent)) $this->insertIntoLocationComponents($this->_id, 'continent', $components->continent);
+                if (isset($components->country)) $this->insertIntoLocationComponents($this->_id, 'country', $components->country);
+                if (isset($components->country_code)) $this->insertIntoLocationComponents($this->_id, 'country_code', $components->country_code);
+                if (isset($components->country_name)) $this->insertIntoLocationComponents($this->_id, 'country_name', $components->country_name);
+                if (isset($components->county)) $this->insertIntoLocationComponents($this->_id, 'county', $components->county);
+                if (isset($components->county_code)) $this->insertIntoLocationComponents($this->_id, 'county_code', $components->county_code);
+                if (isset($components->croft)) $this->insertIntoLocationComponents($this->_id, 'croft', $components->croft);
+                if (isset($components->district)) $this->insertIntoLocationComponents($this->_id, 'district', $components->district);
+                if (isset($components->footway)) $this->insertIntoLocationComponents($this->_id, 'footway', $components->footway);
+                if (isset($components->hamlet)) $this->insertIntoLocationComponents($this->_id, 'hamlet', $components->hamlet);
+                if (isset($components->house)) $this->insertIntoLocationComponents($this->_id, 'house', $components->house);
+                if (isset($components->house_number)) $this->insertIntoLocationComponents($this->_id, 'house_number', $components->house_number);
+                if (isset($components->houses)) $this->insertIntoLocationComponents($this->_id, 'houses', $components->houses);
+                if (isset($components->industrial)) $this->insertIntoLocationComponents($this->_id, 'industrial', $components->industrial);
+                if (isset($components->island)) $this->insertIntoLocationComponents($this->_id, 'island', $components->island);
+                if (isset($components->local_administrative_area)) $this->insertIntoLocationComponents($this->_id, 'local_administrative_area', $components->local_administrative_area);
+                if (isset($components->locality)) $this->insertIntoLocationComponents($this->_id, 'locality', $components->locality);
+                if (isset($components->municipality)) $this->insertIntoLocationComponents($this->_id, 'municipality', $components->municipality);
+                if (isset($components->neighbourhood)) $this->insertIntoLocationComponents($this->_id, 'neighbourhood', $components->neighbourhood);
+                if (isset($components->partial_postcode)) $this->insertIntoLocationComponents($this->_id, 'partial_postcode', $components->partial_postcode);
+                if (isset($components->path)) $this->insertIntoLocationComponents($this->_id, 'path', $components->path);
+                if (isset($components->pedestrian)) $this->insertIntoLocationComponents($this->_id, 'pedestrian', $components->pedestrian);
+                if (isset($components->place)) $this->insertIntoLocationComponents($this->_id, 'place', $components->place);
+                if (isset($components->postal_city)) $this->insertIntoLocationComponents($this->_id, 'postal_city', $components->postal_city);
+                if (isset($components->postcode)) $this->insertIntoLocationComponents($this->_id, 'postcode', $components->postcode);
+                if (isset($components->province)) $this->insertIntoLocationComponents($this->_id, 'province', $components->province);
+                if (isset($components->public_building)) $this->insertIntoLocationComponents($this->_id, 'public_building', $components->public_building);
+                if (isset($components->quarter)) $this->insertIntoLocationComponents($this->_id, 'quarter', $components->quarter);
+                if (isset($components->region)) $this->insertIntoLocationComponents($this->_id, 'region', $components->region);
+                if (isset($components->residential)) $this->insertIntoLocationComponents($this->_id, 'residential', $components->residential);
+                if (isset($components->road)) $this->insertIntoLocationComponents($this->_id, 'road', $components->road);
+                if (isset($components->road_reference)) $this->insertIntoLocationComponents($this->_id, 'road_reference', $components->road_reference);
+                if (isset($components->road_reference_intl)) $this->insertIntoLocationComponents($this->_id, 'road_reference_intl', $components->road_reference_intl);
+                if (isset($components->square)) $this->insertIntoLocationComponents($this->_id, 'square', $components->square);
+                if (isset($components->state)) $this->insertIntoLocationComponents($this->_id, 'state', $components->state);
+                if (isset($components->state_code)) $this->insertIntoLocationComponents($this->_id, 'state_code', $components->state_code);
+                if (isset($components->state_district)) $this->insertIntoLocationComponents($this->_id, 'state_district', $components->state_district);
+                if (isset($components->street)) $this->insertIntoLocationComponents($this->_id, 'street', $components->street);
+                if (isset($components->street_name)) $this->insertIntoLocationComponents($this->_id, 'street_name', $components->street_name);
+                if (isset($components->street_number)) $this->insertIntoLocationComponents($this->_id, 'street_number', $components->street_number);
+                if (isset($components->subdivision)) $this->insertIntoLocationComponents($this->_id, 'subdivision', $components->subdivision);
+                if (isset($components->suburb)) $this->insertIntoLocationComponents($this->_id, 'suburb', $components->suburb);
+                if (isset($components->town)) $this->insertIntoLocationComponents($this->_id, 'town', $components->town);
+                if (isset($components->village)) $this->insertIntoLocationComponents($this->_id, 'village', $components->village);
+            }
+            if (isset($geocode->results[0]->annotations)) {
+                $annotations = $geocode->results[0]->annotations;
+                if (isset($annotations->what3words) && isset($annotations->what3words->words)) {
+                    $this->insertIntoLocationComponents($this->_id, 'what3words', $annotations->what3words->words);
+                }
+                if (isset($annotations->timezone) && isset($annotations->timezone->offset_sec)) {
+                    $this->_timezone = $annotations->timezone->offset_sec / 60;
+                }
+                if (isset($annotations->sun) && isset($annotations->sun->rise) && isset($annotations->sun->set) && isset($annotations->sun->rise->apparent) && isset($annotations->sun->set->apparent)) {
+                    $this->_diurnal = ($annotations->sun->rise->apparent > $annotations->sun->set->apparent) ? 'day' : 'night';
+                }
+            }
+        } else if ($geocode->status->code != 200) {
+            $this->_logger->error('Problem with location lookup, someone call David.');
+            $this->insertIntoLocationComponents($this->_id, 'fail', $geocode->status->code, $geocode);
+        }
+    }
+
+    public function insertIntoLocationComponents($earthquakeId, $component, $name, $raw = null) {
+	    $rawEscaped = null;
+	    if ($raw != null) {
+            $rawEncoded = json_encode($raw);
+            $rawEscaped = mysqli_real_escape_string($this->_db, $rawEncoded);
+        }
+        $sql = "
+			INSERT INTO
+				locationComponents
+			SET
+	            earthquakeId = '$earthquakeId',
+	            component = '$component',
+	            name = '$name',
+	            raw = '$rawEscaped'
+		";
+
+        mysqli_query($this->_db, $sql);
+        $rowsAffected = mysqli_affected_rows($this->_db);
+
+        if ($rowsAffected === 1) {
+            return TRUE;
+        } else {
+            $errors = $this->_db->error;
+            $this->_logger->info('Database error - LC: ' . $errors);
+            return FALSE;
+        }
+    }
+
+    public function setGoogleMapsGeocode($googleMapsKey) {
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $this->_latitude . ',' . $this->_longitude . '&key=' . $googleMapsKey;
+        $googleMaps = new GoogleMaps($this->_logger);
+        $geocode = $googleMaps->reverseGeocode($url);
+        $addressComponentArray = $geocode->results[0]->address_components;
+        foreach ($addressComponentArray as $component) {
+            $typesArray = $component->types;
+            if (in_array('country', $typesArray)) {
+                $this->_country = $component->long_name;
+            }
+            if (in_array('administrative_area_level_1', $typesArray)) {
+                $this->_adminAreaLevel1 = $component->long_name;
+            }
+            if (in_array('administrative_area_level_2', $typesArray)) {
+                $this->_adminAreaLevel2 = $component->long_name;
+            }
+            if (in_array('locality', $typesArray)) {
+                $this->_locality = $component->long_name;
+            } else if (in_array('sublocality', $typesArray)) {
+                $this->_locality = $component->long_name;
+            }
+            if (in_array('postal_code', $typesArray)) {
+                $this->_postalcode = $component->long_name;
+            }
+        }
+    }
+
+    public function dumpEarthquake() {
+	    var_dump($this);
+    }
+
+    public function saveEarthquake($table) {
+        $sql = "
 			INSERT INTO
 				$table
 			SET
 				id = '$this->_id',
 				magnitude = '$this->_magnitude',
 				place = '$this->_place',
+				location = '$this->_location',
 				time = '$this->_time',
+				date = '$this->_date',
+				diurnal = '$this->_diurnal',
 				updated = '$this->_updated',
 				timezone = '$this->_timezone',
 				url = '$this->_url',
@@ -119,19 +279,71 @@ class Earthquake
 				depth = '$this->_depth'
 		";
 
-		mysqli_query($this->_db, $sql);
-		$rowsAffected = mysqli_affected_rows($this->_db);
+        mysqli_query($this->_db, $sql);
+        $rowsAffected = mysqli_affected_rows($this->_db);
 
-		if ($rowsAffected === 1) {
-			return TRUE;
-		} else {
+        if ($rowsAffected === 1) {
+            return TRUE;
+        } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error: ' . $errors);
-			return FALSE;
-		}
-	}
+            $this->_logger->info('Database error - IEQ: ' . $errors);
+            return FALSE;
+        }
+    }
 
-	public function getEarthquakeExists($table) {
+    public function updateEarthquake($table) {
+        $sql = "
+			UPDATE
+				$table
+			SET
+				magnitude = '$this->_magnitude',
+				place = '$this->_place',
+				time = '$this->_time',
+				date = '$this->_date',
+				updated = '$this->_updated',
+				timezone = '$this->_timezone',
+				url = '$this->_url',
+				detailUrl = '$this->_detailUrl',
+				felt = '$this->_felt',
+				cdi = '$this->_cdi',
+				mmi = '$this->_mmi',
+				alert = '$this->_alert',
+				status = '$this->_status',
+				tsunami = '$this->_tsunami',
+				sig = '$this->_sig',
+				net = '$this->_net',
+				code = '$this->_code',
+				ids = '$this->_ids',
+				sources = '$this->_sources',
+				types = '$this->_types',
+				nst = '$this->_nst',
+				dmin = '$this->_dmin',
+				rms = '$this->_rms',
+				gap = '$this->_gap',
+				magType = '$this->_magType',
+				type = '$this->_type',
+				title = '$this->_title',
+				geometryType = '$this->_geometryType',
+				latitude = '$this->_latitude',
+				longitude = '$this->_longitude',
+				depth = '$this->_depth'
+            WHERE
+				id = '$this->_id'
+		";
+
+        mysqli_query($this->_db, $sql);
+        $rowsAffected = mysqli_affected_rows($this->_db);
+
+        if ($rowsAffected === 1) {
+            return TRUE;
+        } else {
+            $errors = $this->_db->error;
+            $this->_logger->info('Database error - UEQ: ' . $errors);
+            return FALSE;
+        }
+    }
+
+    public function getEarthquakeExists($table) {
 		$sql = "
 			SELECT
 				*
