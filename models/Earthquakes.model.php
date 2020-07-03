@@ -254,7 +254,7 @@ class Earthquakes
         return $kilometers * 1000;
     }
 
-    private static function getTimeFromDate($date) {
+    public static function getTimeFromDate($date) {
         $dateObject = new DateTime($date);
         $timeStamp = $dateObject->format('U');
         $miliseconds = $dateObject->format('v');

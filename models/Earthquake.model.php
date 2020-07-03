@@ -104,8 +104,10 @@ class Earthquake
         $url = 'https://api.opencagedata.com/geocode/v1/json?q=' . $this->_latitude . '+' . $this->_longitude . '&key=' . $openCageKey;
         $openCage = new OpenCage($this->_logger);
         $geocode = $openCage->reverseGeocode($url);
+        if (isset($geocode->rate->remaining)) $this->_logger->info('API Calls Remaining: ' . $geocode->rate->remaining);
         if ($geocode->status->code == 200 && $geocode->total_results > 0) {
             if (isset($geocode->results[0]->components)) {
+                $this->preCleanLocationComponents($this->_id);
                 $components = $geocode->results[0]->components;
                 $this->insertIntoLocationComponents($this->_id, null, null, $components);
                 if (isset($components->_category)) $this->insertIntoLocationComponents($this->_id, 'category', $components->_category);
@@ -180,8 +182,8 @@ class Earthquake
     }
 
     public function insertIntoLocationComponents($earthquakeId, $component, $name, $raw = null) {
-	    $rawEscaped = null;
-	    if ($raw != null) {
+        $rawEscaped = null;
+        if ($raw != null) {
             $rawEncoded = json_encode($raw);
             $rawEscaped = mysqli_real_escape_string($this->_db, $rawEncoded);
         }
@@ -205,6 +207,19 @@ class Earthquake
             $this->_logger->info('Database error - LC: ' . $errors);
             return FALSE;
         }
+    }
+
+    public function preCleanLocationComponents($earthquakeId) {
+        $sql = "
+			DELETE FROM
+				locationComponents
+			WHERE
+	            earthquakeId = '$earthquakeId'
+		";
+
+        mysqli_query($this->_db, $sql);
+        $rowsAffected = mysqli_affected_rows($this->_db);
+//        $this->_logger->info('PreCleaned ' . $rowsAffected . ' records from LocationComponents.');
     }
 
     public function setGoogleMapsGeocode($googleMapsKey) {
@@ -299,9 +314,7 @@ class Earthquake
 				magnitude = '$this->_magnitude',
 				place = '$this->_place',
 				time = '$this->_time',
-				date = '$this->_date',
 				updated = '$this->_updated',
-				timezone = '$this->_timezone',
 				url = '$this->_url',
 				detailUrl = '$this->_detailUrl',
 				felt = '$this->_felt',
@@ -344,7 +357,7 @@ class Earthquake
     }
 
     public function getEarthquakeExists($table) {
-		$sql = "
+        $sql = "
 			SELECT
 				*
 			FROM
@@ -353,17 +366,77 @@ class Earthquake
 				id = '$this->_id'
 		";
 
-		$result = mysqli_query($this->_db, $sql);
-		$rows = mysqli_num_rows($result);
+        $result = mysqli_query($this->_db, $sql);
+        $rows = mysqli_num_rows($result);
 
-		if ($rows > 0) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
+        if ($rows > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 
-	/**
+    public function getDBUpdateDate($table) {
+        $sql = "
+			SELECT
+				updated
+			FROM
+				$table
+			WHERE
+				id = '$this->_id'
+		";
+
+        $result = mysqli_query($this->_db, $sql);
+        $rows = mysqli_num_rows($result);
+        if ($rows > 0) {
+            $row = $result->fetch_row();
+            return $row[0];
+        } else {
+            return 0;
+        }
+    }
+
+    public function getDBLatitude($table) {
+        $sql = "
+			SELECT
+				latitude
+			FROM
+				$table
+			WHERE
+				id = '$this->_id'
+		";
+
+        $result = mysqli_query($this->_db, $sql);
+        $rows = mysqli_num_rows($result);
+        if ($rows > 0) {
+            $row = $result->fetch_row();
+            return $row[0];
+        } else {
+            return 0;
+        }
+    }
+
+    public function getDBLongitude($table) {
+        $sql = "
+			SELECT
+				longitude
+			FROM
+				$table
+			WHERE
+				id = '$this->_id'
+		";
+
+        $result = mysqli_query($this->_db, $sql);
+        $rows = mysqli_num_rows($result);
+        if ($rows > 0) {
+            $row = $result->fetch_row();
+            return $row[0];
+        } else {
+            return 0;
+        }
+    }
+
+    /**
 	 * @return mixed
 	 */
 	public function getId()
