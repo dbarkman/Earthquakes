@@ -19,14 +19,6 @@ class updateBlankEqData
 	private $_logger;
 	private $_db;
 	private $_table;
-	private $_originalStartTime;
-	private $_originalEndTime;
-	private $_totalEarthquakesProcessed;
-    private $_updatedEarthquakes;
-    private $_newEarthquakes;
-    private $_failedNewEarthquakes;
-    private $_apiCalls;
-    private $_apiCallsFailed;
 
 	public function __construct($startTime, $endTime, $table, $function, $force = false)
 	{
@@ -34,12 +26,6 @@ class updateBlankEqData
 		$this->_logger = $this->_container->getLogger();
 		$this->_db = $this->_container->getMySQLDBConnect();
 		$this->_table = $table;
-
-        $this->_totalEarthquakesProcessed = 0;
-        $this->_updatedEarthquakes = 0;
-        $this->_newEarthquakes = 0;
-        $this->_failedNewEarthquakes = 0;
-        $this->_failedUpdateEarthquakes = 0;
 
         $startTimestamp = Earthquakes::getTimeFromDate($startTime);
         $endTimestamp = Earthquakes::getTimeFromDate($endTime);
@@ -66,7 +52,6 @@ class updateBlankEqData
                     time < $endTimestamp
                 $queryCondition
             ";
-//        echo 'SQL: ' . $sql . "\n";
 
         $result = mysqli_query($this->_db, $sql);
         if ($result === FALSE) {
@@ -113,7 +98,6 @@ class updateBlankEqData
             WHERE
 				id = '$id'
 		";
-//        echo 'SQL: ' . $sql . "\n";
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -124,19 +108,8 @@ class updateBlankEqData
             return TRUE;
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error - UB: ' . $errors);
+            echo 'Database error - UB: ' . $errors . "\n";
             return FALSE;
         }
     }
-
-    public function reportResults()
-    {
-        $this->_logger->info($this->_totalEarthquakesProcessed . ' total earthquakes processed for the range of ' . $this->_originalStartTime . ' - ' . $this->_originalEndTime . '.');
-        $this->_logger->info($this->_newEarthquakes . ' earthquakes were added to the database.');
-        $this->_logger->info($this->_failedNewEarthquakes . ' earthquakes failed on insert to the database.');
-        $this->_logger->info($this->_updatedEarthquakes . ' earthquakes were updated in the database.');
-        $this->_logger->info($this->_failedNewEarthquakes . ' earthquakes failed on update to the database.');
-        $this->_logger->info($this->_apiCalls . ' calls were made to the USGS API.');
-        $this->_logger->info($this->_apiCallsFailed . ' API calls failed.');
-	}
 }

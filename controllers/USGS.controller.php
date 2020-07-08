@@ -19,7 +19,7 @@ class USGS extends Curl
 
 	public function getEarthquakes($url)
 	{
-		$this->_logger->debug('USGS URL: ' . $url);
+		$this->_logger->info('USGS URL: ' . $url);
 
         return json_decode(self::runCurl('GET', $url, null, null, null));
 	}

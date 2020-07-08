@@ -8,9 +8,9 @@ session_start();
 require_once dirname(__FILE__) . '/includes/includes.php';
 
 if (count($argv) < 5) {
-    echo 'Include arguments, start time, end time and table.' . "\n";
+    echo 'Include arguments, start time, end time, table and action.' . "\n";
 } else {
-    $feq = new fetchEarthquakes($argv[1], $argv[2], $argv[3]);
+    $feq = new fetchEarthquakes($argv[1], $argv[2], $argv[3], $argv[4]);
 }
 
 class fetchEarthquakes
@@ -19,54 +19,63 @@ class fetchEarthquakes
 	private $_logger;
 	private $_db;
 	private $_table;
+	private $_action;
 	private $_countLimit;
 	private $_urlCount;
 	private $_urlQuery;
-	private $_openCageKey;
 	private $_originalStartTime;
 	private $_originalEndTime;
 	private $_totalEarthquakesProcessed;
     private $_updatedEarthquakes;
     private $_newEarthquakes;
+    private $_deletedEarthquakes;
     private $_failedNewEarthquakes;
+    private $_failedUpdateEarthquakes;
+    private $_failedDeletedEarthquakes;
     private $_apiCalls;
     private $_apiCallsFailed;
     private $_sleepWait;
 
-	public function __construct($startTime, $endTime, $table)
+	public function __construct($startTime, $endTime, $table, $action)
 	{
 		$this->_container = new Container();
 		$this->_logger = $this->_container->getLogger();
 		$this->_db = $this->_container->getMySQLDBConnect();
 		$this->_table = $table;
-		$this->_countLimit = 20000;
+		$this->_action = $action;
+		$this->_countLimit = 10000;
 
 		$properties = $this->_container->getProperties();
 		$this->_urlQuery = $properties->getUrlQuery();
         $this->_urlCount = $properties->getUrlCount();
-        $this->_openCageKey = $properties->getKeyOpenCage();
         $this->_originalStartTime = $startTime;
         $this->_originalEndTime = $endTime;
 
         $this->_totalEarthquakesProcessed = 0;
         $this->_updatedEarthquakes = 0;
         $this->_newEarthquakes = 0;
+        $this->_deletedEarthquakes = 0;
         $this->_failedNewEarthquakes = 0;
         $this->_failedUpdateEarthquakes = 0;
+        $this->_failedDeletedEarthquakes = 0;
         $this->_apiCalls = 0;
         $this->_apiCallsFailed = 0;
         $this->_sleepWait = 1;
 
-        $this->fetchEarthquakes($startTime, $endTime, $this->_openCageKey);
+        echo '-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-' . "\n";
+        $this->fetchEarthquakes($startTime, $endTime);
     }
 
-    public function fetchEarthquakes($startTime, $endTime, $openCageKey)
+    public function fetchEarthquakes($startTime, $endTime)
     {
         while ($startTime < $this->_originalEndTime) {
             $endTime = $this->getBestEndDate($startTime, $endTime);
-            echo 'Fetching for: ' . $startTime . ' - ' . $endTime . "\n";
+            echo 'Fetching for: ' . $startTime . ' - ' . $endTime . ' for: ' . $this->_action . "\n";
             $url = $this->_urlQuery . '?format=geojson' . '&starttime=' . $startTime . '&endtime=' . $endTime . '&orderby=time-asc';
-            $this->getEarthquakesFromUSGS($url, $openCageKey);
+            if ($this->_action == 'delete') {
+                $url .= '&includedeleted=only';
+            }
+            $this->getEarthquakesFromUSGS($url);
             $startDate = new DateTime($startTime);
             $endDate = new DateTime($endTime);
             $interval = $startDate->diff($endDate);
@@ -85,21 +94,22 @@ class fetchEarthquakes
 
     public function reportResults()
     {
-        $this->_logger->info($this->_totalEarthquakesProcessed . ' total earthquakes processed for the range of ' . $this->_originalStartTime . ' - ' . $this->_originalEndTime . '.');
-        $this->_logger->info($this->_newEarthquakes . ' earthquakes were added to the database.');
-        $this->_logger->info($this->_failedNewEarthquakes . ' earthquakes failed on insert to the database.');
-        $this->_logger->info($this->_updatedEarthquakes . ' earthquakes were updated in the database.');
-        $this->_logger->info($this->_failedNewEarthquakes . ' earthquakes failed on update to the database.');
-        $this->_logger->info($this->_apiCalls . ' calls were made to the USGS API.');
-        $this->_logger->info($this->_apiCallsFailed . ' API calls failed.');
+        echo $this->_totalEarthquakesProcessed . ' total earthquakes processed for the range of ' . $this->_originalStartTime . ' - ' . $this->_originalEndTime . '.' . "\n";
+        echo $this->_newEarthquakes . ' earthquakes were added to the database.' . "\n";
+        echo $this->_failedNewEarthquakes . ' earthquakes failed on insert to the database.' . "\n";
+        echo $this->_updatedEarthquakes . ' earthquakes were updated in the database.' . "\n";
+        echo $this->_failedUpdateEarthquakes . ' earthquakes failed on update to the database.' . "\n";
+        echo $this->_deletedEarthquakes . ' earthquakes were deleted from the database.' . "\n";
+        echo $this->_failedDeletedEarthquakes . ' earthquakes failed to delete from the database.' . "\n";
+        echo $this->_apiCalls . ' calls were made to the USGS API.' . "\n";
+        echo $this->_apiCallsFailed . ' API calls failed.' . "\n";
+        echo 'Date: ' . date('m/d/Y H:i:s', time()) . "\n";
 	}
 
 	public function getBestEndDate($startTime, $endTime)
     {
         $url = $this->_urlCount . '?format=geojson' . '&starttime=' . $startTime . '&endtime=' . $endTime . '&orderby=time-asc';
-        echo 'Checking: ' . $startTime . ' - ' . $endTime . "\n";
         $count = $this->getEarthquakeCountFromUSGS($url);
-        echo 'Count: ' . $count . "\n";
         while ($count > $this->_countLimit) {
             $startDate = new DateTime($startTime);
             $endDate = new DateTime($endTime);
@@ -123,17 +133,13 @@ class fetchEarthquakes
                 $endTime = $startDate->add($interval)->format('Y-m-d');
             }
             $url = $this->_urlCount . '?format=geojson' . '&starttime=' . $startTime . '&endtime=' . $endTime . '&orderby=time-asc';
-            echo 'Checking: ' . $startTime . ' - ' . $endTime . "\n";
             $count = $this->getEarthquakeCountFromUSGS($url);
-            echo 'Count: ' . $count . "\n";
         }
         return $endTime;
     }
 
 	public function getEarthquakeCountFromUSGS($url)
     {
-        $this->_logger->info('Counting earthquakes!');
-
         $usgs = new USGS($this->_logger);
         $earthquakes = $usgs->getEarthquakes($url);
         $this->_apiCalls++;
@@ -144,24 +150,22 @@ class fetchEarthquakes
         }
     }
 
-	public function getEarthquakesFromUSGS($url, $openCageKey)
+	public function getEarthquakesFromUSGS($url)
 	{
-	    $this->_logger->info('Sleeping for ' . $this->_sleepWait . ' seconds.');
 	    sleep($this->_sleepWait);
-		$this->_logger->info('Digging for earthquakes!');
 
 		$usgs = new USGS($this->_logger);
         $earthquakes = $usgs->getEarthquakes($url);
         $this->_apiCalls++;
 
         if (!isset($earthquakes->features)) {
-            if ($this->_sleepWait == 64) {
+            if ($this->_sleepWait == 32) {
                 $this->_sleepWait = 1;
             } else {
                 $this->_sleepWait *= 2;
             }
             $this->_apiCallsFailed++;
-            $this->getEarthquakesFromUSGS($url, $openCageKey);
+            $this->getEarthquakesFromUSGS($url);
         } else {
             $this->_sleepWait = 1;
 
@@ -178,34 +182,50 @@ class fetchEarthquakes
                     $this->_earthquakeId = $earthquake->getId();
                     $this->_totalEarthquakesProcessed++;
 
-                    if ($earthquake->getEarthquakeExists($this->_table) === TRUE) {
-                        $updatedDB = $earthquake->getDBUpdateDate($this->_table);
-                        $updatedAPI = $earthquake->getUpdated();
-                        if ($updatedDB < $updatedAPI) {
-                            $latitudeDB = round($earthquake->getDBLatitude($this->_table), 1);
-                            $longitudeDB = round($earthquake->getDBLongitude($this->_table), 1);
-                            $latitudeAPI = round($earthquake->getLatitude(), 1);
-                            $longitudeAPI = round($earthquake->getLongitude(), 1);
-                            if ($latitudeDB != $latitudeAPI || $longitudeDB != $longitudeAPI) {
-                                $earthquake->preCleanLocationComponents($this->_earthquakeId);
-                            }
-                            $earthquake->setDate();
-                            $earthquake->setLocation();
-                            if ($earthquake->updateEarthquake($this->_table)) {
-                                $this->_updatedEarthquakes++;
+                    $earthquakeEntry = $earthquake->getEarthquakeExists($this->_table);
+                    if ($earthquakeEntry != 0) {
+                        if ($this->_action == 'delete') {
+                            if ($earthquake->deleteEarthquake($this->_table)) {
+                                $this->_deletedEarthquakes++;
+                                echo 'Earthquake deleted: ' . $this->_earthquakeId . "\n";
                             } else {
-                                $this->_logger->info('🤯 Earthquake NOT updated: ' . $this->_earthquakeId);
-                                $this->_failedUpdateEarthquakes++;
+                                $this->_failedDeletedEarthquakes++;
+                                echo '🤯 Earthquake NOT deleted: ' . $this->_earthquakeId . "\n";
+                            }
+                        } else {
+                            $updatedDB = $earthquake->getDBUpdateDate($this->_table);
+                            $updatedAPI = $earthquake->getAPIUpdateDate();
+                            if ($updatedDB < $updatedAPI) {
+                                $latitudeDB = round($earthquake->getDBLatitude($this->_table), 1);
+                                $longitudeDB = round($earthquake->getDBLongitude($this->_table), 1);
+                                $latitudeAPI = round($earthquake->getLatitude(), 1);
+                                $longitudeAPI = round($earthquake->getLongitude(), 1);
+                                if ($latitudeDB != $latitudeAPI || $longitudeDB != $longitudeAPI) {
+                                    EarthquakeLocation::deleteEarthquakeLocationConnections($this->_logger, $this->_db, $earthquakeEntry);
+                                    $earthquake->setLocationUpdated(0);
+                                    $earthquake->updateBDCData($this->_table);
+                                }
+                                $earthquake->setDate();
+                                $earthquake->setLocation();
+                                if ($earthquake->updateEarthquake($this->_table)) {
+                                    echo 'Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry . "\n";
+                                    $this->_updatedEarthquakes++;
+                                } else {
+                                    echo '🤯 Earthquake NOT updated: ' . $this->_earthquakeId . "\n";
+                                    $this->_failedUpdateEarthquakes++;
+                                }
                             }
                         }
-                    } else {
+                    } else if($this->_action != 'delete') {
                         try {
                             $earthquake->setDate();
                             $earthquake->setLocation();
                             if ($earthquake->saveEarthquake($this->_table)) {
+                                echo 'Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry . "\n";
                                 $this->_newEarthquakes++;
                             } else {
-                                $this->_logger->info('🤯 Earthquake NOT added: ' . $this->_earthquakeId . ' **********');
+                                echo '🤯 Earthquake NOT added: ' . $this->_earthquakeId . ' **********' . "\n";
+                                var_dump($earthquakeElement);
                                 $this->_failedNewEarthquakes++;
                             }
                         } catch (mysqli_sql_exception $e) {
@@ -220,7 +240,6 @@ class fetchEarthquakes
                 $totalCount--;
                 if ($count == 1000) {
                     $count = 0;
-                    echo $totalCount . ' earthquakes left to review.' . "\n";
                 }
             }
         }
