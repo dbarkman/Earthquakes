@@ -52,11 +52,17 @@ class Earthquake
     private $_locationUpdated;
     private $_geocode;
 
-	public function __construct($logger, $db, $earthquake) {
+	public function __construct($logger, $db, $earthquake, $id = null) {
 		$this->_logger = $logger;
 		$this->_db = $db;
 
-		$this->_id = $earthquake->id;
+        if (isset($earthquake->id)) {
+            $this->_id = $earthquake->id;
+        } else if (isset($id)) {
+            $this->_id = $id;
+        } else {
+            $this->_id = 0;
+        }
         $this->_title = (isset($earthquake->properties->title)) ? mysqli_real_escape_string($this->_db, $earthquake->properties->title) : '';
 		$this->_magnitude = (isset($earthquake->properties->mag)) ? $earthquake->properties->mag : 0.0;
         $this->_type = (isset($earthquake->properties->type)) ? mysqli_real_escape_string($this->_db, $earthquake->properties->type) : '';
@@ -382,6 +388,7 @@ class Earthquake
         $rows = mysqli_num_rows($result);
         if ($rows > 0) {
             $row = $result->fetch_row();
+            $this->_latitude = $row[0];
             return $row[0];
         } else {
             return 0;
@@ -402,6 +409,7 @@ class Earthquake
         $rows = mysqli_num_rows($result);
         if ($rows > 0) {
             $row = $result->fetch_row();
+            $this->_longitude = $row[0];
             return $row[0];
         } else {
             return 0;
