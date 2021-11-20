@@ -62,7 +62,6 @@ class fetchEarthquakes
         $this->_apiCallsFailed = 0;
         $this->_sleepWait = 1;
 
-        echo '-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-' . "\n";
         $this->fetchEarthquakes($startTime, $endTime);
     }
 
@@ -70,7 +69,6 @@ class fetchEarthquakes
     {
         while ($startTime < $this->_originalEndTime) {
             $endTime = $this->getBestEndDate($startTime, $endTime);
-            echo 'Fetching for: ' . $startTime . ' - ' . $endTime . ' for: ' . $this->_action . "\n";
             $url = $this->_urlQuery . '?format=geojson' . '&starttime=' . $startTime . '&endtime=' . $endTime . '&orderby=time-asc';
             if ($this->_action == 'delete') {
                 $url .= '&includedeleted=only';
@@ -94,16 +92,15 @@ class fetchEarthquakes
 
     public function reportResults()
     {
-        echo $this->_totalEarthquakesProcessed . ' total earthquakes processed for the range of ' . $this->_originalStartTime . ' - ' . $this->_originalEndTime . '.' . "\n";
-        echo $this->_newEarthquakes . ' earthquakes were added to the database.' . "\n";
-        echo $this->_failedNewEarthquakes . ' earthquakes failed on insert to the database.' . "\n";
-        echo $this->_updatedEarthquakes . ' earthquakes were updated in the database.' . "\n";
-        echo $this->_failedUpdateEarthquakes . ' earthquakes failed on update to the database.' . "\n";
-        echo $this->_deletedEarthquakes . ' earthquakes were deleted from the database.' . "\n";
-        echo $this->_failedDeletedEarthquakes . ' earthquakes failed to delete from the database.' . "\n";
-        echo $this->_apiCalls . ' calls were made to the USGS API.' . "\n";
-        echo $this->_apiCallsFailed . ' API calls failed.' . "\n";
-        echo 'Date: ' . date('m/d/Y H:i:s', time()) . "\n";
+        $this->_logger->info($this->_totalEarthquakesProcessed . ' total earthquakes processed for the range of ' . $this->_originalStartTime . ' - ' . $this->_originalEndTime . ', for ' . $this->_action);
+        $this->_logger->info($this->_newEarthquakes . ' earthquakes were added to the database.');
+        $this->_logger->info($this->_failedNewEarthquakes . ' earthquakes failed on insert to the database.');
+        $this->_logger->info($this->_updatedEarthquakes . ' earthquakes were updated in the database.');
+        $this->_logger->info($this->_failedUpdateEarthquakes . ' earthquakes failed on update to the database.');
+        $this->_logger->info($this->_deletedEarthquakes . ' earthquakes were deleted from the database.');
+        $this->_logger->info($this->_failedDeletedEarthquakes . ' earthquakes failed to delete from the database.');
+        $this->_logger->info($this->_apiCalls . ' calls were made to the USGS API.');
+        $this->_logger->info($this->_apiCallsFailed . ' API calls failed.');
 	}
 
 	public function getBestEndDate($startTime, $endTime)
@@ -172,7 +169,6 @@ class fetchEarthquakes
             $earthquakeArray = $earthquakes->features;
 
             $totalCount = $earthquakes->metadata->count;
-            echo 'Processing ' . $totalCount . ' earthquakes.' . "\n";
 
             $count = 0;
             foreach ($earthquakeArray as $earthquakeElement) {
@@ -187,10 +183,10 @@ class fetchEarthquakes
                         if ($this->_action == 'delete') {
                             if ($earthquake->deleteEarthquake($this->_table)) {
                                 $this->_deletedEarthquakes++;
-                                echo 'Earthquake deleted: ' . $this->_earthquakeId . "\n";
+                                $this->_logger->info('Earthquake deleted: ' . $this->_earthquakeId);
                             } else {
                                 $this->_failedDeletedEarthquakes++;
-                                echo '🤯 Earthquake NOT deleted: ' . $this->_earthquakeId . "\n";
+                                $this->_logger->info('🤯 Earthquake NOT deleted: ' . $this->_earthquakeId);
                             }
                         } else {
                             $updatedDB = $earthquake->getDBUpdateDate($this->_table);
@@ -208,10 +204,10 @@ class fetchEarthquakes
                                 $earthquake->setDate();
                                 $earthquake->setLocation();
                                 if ($earthquake->updateEarthquake($this->_table)) {
-                                    echo 'Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry . "\n";
+                                    $this->_logger->info('Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
                                     $this->_updatedEarthquakes++;
                                 } else {
-                                    echo '🤯 Earthquake NOT updated: ' . $this->_earthquakeId . "\n";
+                                    $this->_logger->info('🤯 Earthquake NOT updated: ' . $this->_earthquakeId);
                                     $this->_failedUpdateEarthquakes++;
                                 }
                             }
@@ -221,10 +217,10 @@ class fetchEarthquakes
                             $earthquake->setDate();
                             $earthquake->setLocation();
                             if ($earthquake->saveEarthquake($this->_table)) {
-                                echo 'Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry . "\n";
+                                $this->_logger->info('Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
                                 $this->_newEarthquakes++;
                             } else {
-                                echo '🤯 Earthquake NOT added: ' . $this->_earthquakeId . ' **********' . "\n";
+                                $this->_logger->info('🤯 Earthquake NOT added: ' . $this->_earthquakeId . ' **********');
                                 var_dump($earthquakeElement);
                                 $this->_failedNewEarthquakes++;
                             }

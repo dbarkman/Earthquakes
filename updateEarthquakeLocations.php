@@ -7,7 +7,7 @@ session_start();
 
 require_once dirname(__FILE__) . '/includes/includes.php';
 
-$count = 1000;
+$count = 1350;
 if (isset($argv[1])) {
     $count = $argv[1];
 }
@@ -38,12 +38,10 @@ class updateEarthquakeLocations
         $this->_count = 0;
 
         $earthquakeArray = $this->getEarthquakesWithNoLocation($count);
-        $this->_logger->info('💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥');
         foreach ($earthquakeArray as $earthquake) {
-            $this->_count++;
-            echo $earthquake . ' - ' . $this->_count . "\n";
             $this->setEarthquakeLocation($earthquake);
         }
+        $this->_logger->info('Earthquake locations updated: ' . $this->_count);
     }
 
     public function getEarthquakesWithNoLocation($count)
@@ -57,7 +55,6 @@ class updateEarthquakeLocations
                 locationUpdated = 0
             LIMIT $count
         ";
-//        $this->_logger->info('SQL: ' . $sql);
 
         $earthquakes = array();
         $result = mysqli_query($this->_db, $sql);
@@ -93,9 +90,11 @@ class updateEarthquakeLocations
                     $this->createLocation($infoLocation, $earthquakeEntry);
                 }
             }
-            $this->_logger->info('Earthquake location data updated: ' . $id . ' - ' . $earthquakeEntry . ' - Count: ' . $this->_count);
+            $this->_count++;
+            $this->_logger->info('Earthquake location updated: ' . $id . ' - ' . $earthquakeEntry . ' - Count: ' . $this->_count);
         } else {
             Earthquake::updateLocationUpdated($this->_table, 0, $id, $this->_db, $this->_logger);
+            $this->_logger->info('Earthquake location not updated: ' . $id . ' - ' . $earthquakeEntry . ' - Count: ' . $this->_count);
         }
     }
 

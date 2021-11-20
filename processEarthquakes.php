@@ -45,9 +45,7 @@ class processEarthquakes
 
 		$usgs = new USGS($this->_logger);
         $earthquakes = $usgs->getEarthquakes($this->_url);
-        if (!isset($earthquakes->features)) {
-            $this->_logger->info('💣💥 API Call Failed! 💥💣');
-        } else {
+        if (isset($earthquakes->features)) {
             $earthquakeArray = $earthquakes->features;
 
             $newEarthquakeCount = 0;
@@ -71,8 +69,6 @@ class processEarthquakes
                             $longitudeAPI = round($earthquake->getLongitude(), 1);
                             if ($latitudeDB != $latitudeAPI || $longitudeDB != $longitudeAPI) {
                                 $earthquake->setBDCLocationData($this->_bigDataCloudKey);
-                                $this->_logger->info('*** LOCATION UPDATED *** - ' . $earthquakeEntry . ' - ' . $this->_earthquakeId);
-                                $this->_logger->info('*** LOCATION UPDATED *** - DB Lat: ' . $latitudeDB . ', API Lat: ' . $latitudeAPI . ', DB Lon: ' . $longitudeDB . ', API Lon: ' . $longitudeAPI);
                                 EarthquakeLocation::deleteEarthquakeLocationConnections($this->_logger, $this->_db, $earthquakeEntry);
                                 $geocode = $earthquake->getGeocode();
                                 if (isset($geocode->localityInfo->administrative)) {

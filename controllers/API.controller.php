@@ -1,12 +1,12 @@
 <?php
 
 /**
- * USGS.controller.php
+ * API.controller.php
  * Description:
  *
  */
 
-class USGS extends Curl
+class API extends Curl
 {
 
 	private $_logger;
@@ -17,9 +17,9 @@ class USGS extends Curl
 		$this->_logger = $logger;
 	}
 
-	public function getEarthquakes($url)
+	public function getAPI($url)
 	{
-		$this->_logger->debug('USGS URL: ' . $url);
+		$this->_logger->debug('API URL: ' . $url);
 
         return json_decode(self::runCurl('GET', $url, null, null, null));
 	}

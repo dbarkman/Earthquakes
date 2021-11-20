@@ -34,10 +34,15 @@ class Earthquakes
         $longitude = (array_key_exists('longitude', $parameters)) ? $parameters['longitude'] : '';
         $radius = (array_key_exists('radius', $parameters)) ? $parameters['radius'] : '';
         $units = (array_key_exists('units', $parameters)) ? $parameters['units'] : '';
-        $count = (array_key_exists('count', $parameters)) ? $parameters['count'] : 100;
+        $count = (array_key_exists('count', $parameters)) ? $parameters['count'] : 1000;
         $magnitude = (array_key_exists('magnitude', $parameters)) ? $parameters['magnitude'] : 0;
         $intensity = (array_key_exists('intensity', $parameters)) ? $parameters['intensity'] : 0;
         $type = (array_key_exists('type', $parameters)) ? $parameters['type'] : 'earthquake';
+        if ($type == 'notEarthquake') {
+            $type = "type != 'earthquake'";
+        } else {
+            $type = "type = '$type'";
+        }
 
         if (!empty($interval)) {
             $time = time();
@@ -65,16 +70,13 @@ class Earthquakes
                     WHERE time BETWEEN $startDate AND $endDate
                     AND magnitude >= $magnitude
                     AND mmi >= $intensity
-                    AND type = '$type'
-                    ORDER BY time DESC
+                    AND $type
                 ";
             } else {
                 $queryCondition = "
                     WHERE magnitude >= $magnitude
                     AND mmi >= $intensity
-                    AND type = '$type'
-                    ORDER BY time DESC
-                    LIMIT $count
+                    AND $type
                 ";
             }
 
@@ -83,6 +85,9 @@ class Earthquakes
                 SELECT * FROM
                     earthquakes
                 $queryCondition
+                ORDER BY 
+                    time DESC
+                LIMIT $count
             ";
             $logger->info('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
@@ -148,20 +153,18 @@ class Earthquakes
 
         $queryCondition = '';
         if (!empty($startDate) && !empty($endDate)) {
-            $count = 0;
+//            $count = 0;
             $queryCondition = "
                 AND time BETWEEN $startDate AND $endDate
                 AND magnitude >= $magnitude
                 AND mmi >= $intensity
-                AND type = '$type'
-                ORDER BY time DESC
+                AND $type
             ";
         } else {
             $queryCondition = "
                 AND magnitude >= $magnitude
                 AND mmi >= $intensity
-                AND type = '$type'
-                ORDER BY time DESC
+                AND $type
             ";
         }
 
@@ -182,6 +185,9 @@ class Earthquakes
                 AND
                 longitude BETWEEN $minLongitude AND $maxLongitude
                 $queryCondition
+                ORDER BY 
+                    time DESC
+                LIMIT $count
         ";
         $logger->info('Circle SQL: ' . preg_replace('!\s+!', ' ', $sql));
 

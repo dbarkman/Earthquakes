@@ -183,8 +183,6 @@ class Earthquake
 				detailUrl = '$this->_detailUrl',
 				locationUpdated = '$this->_locationUpdated'
 		";
-//        $this->_logger->info('SQL: ' . $sql);
-
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -266,7 +264,6 @@ class Earthquake
             WHERE
 				id = '$this->_id'
 		";
-//        $this->_logger->info('SQL: ' . $sql);
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -278,7 +275,6 @@ class Earthquake
                 $this->_logger->info('Database error for - UBDCD: ' . $this->_id . ' - UBDCD: ' . $errors);
                 return FALSE;
             } else {
-                $this->_logger->info('No update for - UBDCD: ' . $this->_id);
                 return TRUE;
             }
         }
@@ -302,10 +298,10 @@ class Earthquake
         } else {
             if ($errors = $db->error) {
                 $logger->info('Database error for: ' . $id . ' - UT: ' . $errors);
+                return FALSE;
             } else {
-                $logger->info('No update for UT: ' . $id);
+                return TRUE;
             }
-            return FALSE;
         }
     }
 
@@ -327,10 +323,10 @@ class Earthquake
         } else {
             if ($errors = $db->error) {
                 $logger->info('Database error for: ' . $id . ' - UT: ' . $errors);
+                return FALSE;
             } else {
-                $logger->info('No update for ULU: ' . $id);
+                return TRUE;
             }
-            return FALSE;
         }
     }
 
