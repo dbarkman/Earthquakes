@@ -45,6 +45,8 @@ class processEarthquakes
 
 		$usgs = new USGS($this->_logger);
         $earthquakes = $usgs->getEarthquakes($this->_url);
+//        var_dump($earthquakes);
+//        exit();
         if (isset($earthquakes->features)) {
             $earthquakeArray = $earthquakes->features;
 
@@ -173,10 +175,14 @@ class processEarthquakes
             $locationEntry = $location->saveLocation();
             if ($locationEntry == 0) {
                 $this->_logger->info('🤯 Location NOT added: ' . $locationEntry);
+            } else {
+                $this->linkEarthquakeToLocation($earthquakeEntry, $locationEntry);
+                $this->_logger->info('New Location : ' . $locationEntry . ' linked to Earthquake: ' . $earthquakeEntry);
             }
-        }
-        if ($locationEntry != 0) {
+        } else {
+//        if ($locationEntry != 0) {
             $this->linkEarthquakeToLocation($earthquakeEntry, $locationEntry);
+            $this->_logger->info('Existing Location : ' . $locationEntry . ' linked to Earthquake: ' . $earthquakeEntry);
         }
     }
 

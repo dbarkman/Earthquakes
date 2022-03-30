@@ -86,6 +86,7 @@ class fetchEarthquakes
             $startTime = $endTime;
             $endTime = $endDate->add($interval)->format('Y-m-d');
             if ($endTime > $this->_originalEndTime) $endTime = $this->_originalEndTime;
+            sleep(2);
         }
         $this->reportResults();
     }
@@ -131,6 +132,7 @@ class fetchEarthquakes
             }
             $url = $this->_urlCount . '?format=geojson' . '&starttime=' . $startTime . '&endtime=' . $endTime . '&orderby=time-asc';
             $count = $this->getEarthquakeCountFromUSGS($url);
+            sleep(2);
         }
         return $endTime;
     }
