@@ -204,6 +204,7 @@ class fetchEarthquakes
                                     $earthquake->updateBDCData($this->_table);
                                 }
                                 $earthquake->setDate();
+                                $earthquake->setDistance();
                                 $earthquake->setLocation();
                                 if ($earthquake->updateEarthquake($this->_table)) {
                                     $this->_logger->info('Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
@@ -217,6 +218,7 @@ class fetchEarthquakes
                     } else if($this->_action != 'delete') {
                         try {
                             $earthquake->setDate();
+                            $earthquake->setDistance();
                             $earthquake->setLocation();
                             if ($earthquake->saveEarthquake($this->_table)) {
                                 $this->_logger->info('Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);

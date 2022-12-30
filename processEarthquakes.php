@@ -15,11 +15,14 @@ class processEarthquakes
 	private $_logger;
 	private $_db;
     private $_table;
+    private $_sendPushes;
     private $_store;
     private $_notify;
+    private $_sendPush;
     private $_earthquakeId;
     private $_url;
     private $_bigDataCloudKey;
+    private $_pushesDebug;
 
 	public function __construct()
 	{
@@ -28,9 +31,13 @@ class processEarthquakes
 		$this->_db = $this->_container->getMySQLDBConnect();
         $this->_table = 'earthquakes';
 
+        $this->_sendPushes = new SendPushes();
+        $this->_pushesDebug = 0;
+
 		$properties = $this->_container->getProperties();
         $this->_store = $properties->getStoreValue();
         $this->_notify = $properties->getNotifyValue();
+        $this->_sendPush = $properties->getNotifyValue();
 		$urlHour = $properties->getUrlHour();
 		$urlDay = $properties->getUrlDay();
 		$this->_url = $urlDay; //configure hour or day here
@@ -87,6 +94,7 @@ class processEarthquakes
                                 }
                             }
                             $earthquake->setDate();
+                            $earthquake->setDistance();
                             $earthquake->setLocation();
                             if ($earthquake->updateEarthquake($this->_table)) {
                                 $this->_logger->info('Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
@@ -99,6 +107,7 @@ class processEarthquakes
                     } else {
                         try {
                             $earthquake->setDate();
+                            $earthquake->setDistance();
                             $earthquake->setLocation();
                             $earthquake->setBDCLocationData($this->_bigDataCloudKey);
                             if ($this->_store === "TRUE") {
@@ -124,10 +133,14 @@ class processEarthquakes
                                 }
                             }
                             if ($this->_notify === "TRUE") {
-                                $this->sendNotifications($earthquakeElement);
+                                $this->sendTwitterNotification($earthquakeElement);
                                 $lat = $earthquake->getLatitude();
                                 $long = $earthquake->getLongitude();
                                 $this->_logger->debug('Lat: ' . $lat . ' - Long: ' . $long);
+                            }
+                            if ($this->_sendPush === "TRUE") {
+                                $this->_logger->info("**************************** GOING TO SEND PUSH NOTIFICATIONS ****************************");
+                                $this->sendPushNotification($earthquakeElement);
                             }
                         } catch (mysqli_sql_exception $e) {
                             $this->_logger->error('Problem with earthquake data: ' . $this->_earthquakeId . ', could not insert into database: ' . $e->getMessage());
@@ -196,8 +209,20 @@ class processEarthquakes
         }
     }
 
-	private function sendNotifications($earthquake)
-	{
+    private function sendPushNotification($earthquake) {
+        $magnitude = round($earthquake->properties->mag, 2);
+        $latitude = $earthquake->geometry->coordinates[1];
+        $longitude = $earthquake->geometry->coordinates[0];
+        $place = $earthquake->properties->place;
+        $time = date('n/j/y @ G:i:s', substr($earthquake->properties->time, 0, 10));
+        $type = $earthquake->properties->type;
+
+        $title = 'New ' . $type . '!';
+        $payload = 'M' . $magnitude .  ' ' . $type . ', ' . $place . ' on ' . $time . ' UTC';
+        $this->_sendPushes->sendPushes($this->_pushesDebug, $title, $payload, $magnitude, $latitude, $longitude);
+    }
+
+	private function sendTwitterNotification($earthquake) {
         global $twitterCreds;
 
         $magnitude = round($earthquake->properties->mag, 2);

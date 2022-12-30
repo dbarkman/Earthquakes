@@ -18,6 +18,8 @@ class Earthquake
     private $_time;
     private $_updated;
     private $_place;
+    private $_distanceKM;
+    private $_placeOnly;
     private $_location;
     private $_continent;
     private $_country;
@@ -69,6 +71,8 @@ class Earthquake
         $this->_time = (isset($earthquake->properties->time)) ? $earthquake->properties->time : 0;
         $this->_updated = (isset($earthquake->properties->updated)) ? $earthquake->properties->updated : 0;
 		$this->_place = (isset($earthquake->properties->place)) ? mysqli_real_escape_string($this->_db, $earthquake->properties->place) : '';
+        $this->_distanceKM = '';
+        $this->_placeOnly = '';
         $this->_continent = '';
         $this->_country = '';
         $this->_subnational = '';
@@ -104,6 +108,18 @@ class Earthquake
 
 	public function setDate() {
         $this->_date = Earthquakes::getDateFromTime($this->_time);
+    }
+
+    public function setDistance() {
+        $pattern = "/^([0-9]{1,})[ ]*(km)/";
+        if (preg_match($pattern, $this->_place, $matches)) {
+            $this->_distanceKM = trim($matches[1]);
+            $splits = preg_split($pattern, $this->_place);
+            $this->_placeOnly = trim(mysqli_real_escape_string($this->_db, $splits[1]));
+        } else {
+            $this->_distanceKM = 0;
+            $this->_placeOnly = trim(mysqli_real_escape_string($this->_db, $this->_place));
+        }
     }
 
     public function setLocation() {
@@ -150,6 +166,8 @@ class Earthquake
 				time = '$this->_time',
 				updated = '$this->_updated',
 				place = '$this->_place',
+				distanceKM = '$this->_distanceKM',
+				placeOnly = '$this->_placeOnly',
 				location = '$this->_location',
 				continent = '$this->_continent',
 				country = '$this->_country',
@@ -208,6 +226,8 @@ class Earthquake
 				time = '$this->_time',
 				updated = '$this->_updated',
 				place = '$this->_place',
+				distanceKM = '$this->_distanceKM',
+				placeOnly = '$this->_placeOnly',
 				location = '$this->_location',
 				latitude = '$this->_latitude',
 				longitude = '$this->_longitude',
