@@ -16,8 +16,7 @@ class BDCData
     private $_longitude;
     private $_response;
 
-    public static function saveBDCData($logger, $db, $earthquakeId, $latitude, $longitude, $response)
-    {
+    public static function saveBDCData($logger, $db, $earthquakeId, $latitude, $longitude, $response) {
         $responseEncoded = json_encode($response);
         $responseEscaped = mysqli_real_escape_string($db, $responseEncoded);
         $sql = "
@@ -29,6 +28,7 @@ class BDCData
                 longitude = '$longitude',
                 response = '$responseEscaped'
 		";
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($db, $sql);
         $rowsAffected = mysqli_affected_rows($db);
@@ -37,7 +37,7 @@ class BDCData
             return TRUE;
         } else {
             $errors = $db->error;
-            $logger->info('Database error - IBDCD: ' . $errors);
+            $logger->error('Database error - IBDCD: ' . $errors);
             return FALSE;
         }
     }

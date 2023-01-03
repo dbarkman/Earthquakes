@@ -91,10 +91,10 @@ class updateEarthquakeLocations
                 }
             }
             $this->_count++;
-            $this->_logger->info('Earthquake location updated: ' . $id . ' - ' . $earthquakeEntry . ' - Count: ' . $this->_count);
+            $this->_logger->debug('Earthquake location updated: ' . $id . ' - ' . $earthquakeEntry . ' - Count: ' . $this->_count);
         } else {
             Earthquake::updateLocationUpdated($this->_table, 0, $id, $this->_db, $this->_logger);
-            $this->_logger->info('Earthquake location not updated: ' . $id . ' - ' . $earthquakeEntry . ' - Count: ' . $this->_count);
+            $this->_logger->warn('Earthquake location not updated: ' . $id . ' - ' . $earthquakeEntry);
         }
     }
 

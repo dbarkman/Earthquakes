@@ -19,11 +19,14 @@ class USGS extends Curl
 		$this->_logger = $logger;
 	}
 
-	public function getEarthquakes($url)
-	{
-		$this->_logger->info('USGS URL: ' . $url);
+	public function getEarthquakes($url) {
+		$this->_logger->debug('USGS URL: ' . $url);
         $response = self::runCurl('GET', $url, null, null, null, true);
-        $this->_logger->info("USGS API returned: " . $response['status']);
+        if ($response['status'] == 200) {
+            $this->_logger->debug("USGS API returned: " . $response['status']);
+        } else {
+            $this->_logger->warn("USGS API returned: " . $response['status']);
+        }
         if ($response['status'] == 429) {
             $this->_logger->error("USGS API returned 429, BACK OFF!");
             return array();

@@ -21,7 +21,6 @@ class PopulateDistance
         $this->_logger = $this->_container->getLogger();
         $this->_db = $this->_container->getMySQLDBConnect();
 
-        $this->_logger->info('Populating distance');
         $nextEq = $this->getNextEarthquake();
         foreach($nextEq as $eq) {
             $entry = $eq['entry'];
@@ -38,6 +37,7 @@ class PopulateDistance
             $this->populateDistance($entry, $distanceKM, $placeOnly);
 //            $this->_logger->info('Place populated: ' . $placeOnly . ', Distance: ' . $distanceKM);
         }
+        $this->_logger->info('Populate distance for: ' . count($nextEq) . ' earthquakes.');
         $time = (microtime(true) - $start);
         $this->_logger->info('Time to populate distance: ' . $time);
     }
@@ -56,8 +56,8 @@ class PopulateDistance
                 place != ''
             ORDER BY
                 entry DESC
-            LIMIT 1000
         ";
+//            LIMIT 1000
         $earthquakes = array();
         $result = mysqli_query($this->_db, $sql);
         if ($result === FALSE) {

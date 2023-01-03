@@ -28,7 +28,7 @@ class Tokens {
                 AND
                 magnitude <= '$magnitude'
         ";
-        $logger->info('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $tokens = array();
         $result = mysqli_query($db, $sql);

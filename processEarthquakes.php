@@ -46,8 +46,8 @@ class processEarthquakes
 		$this->getEarthquakes();
 	}
 
-	public function getEarthquakes()
-	{
+	public function getEarthquakes() {
+		$this->_logger->info('----------------------------------------');
 		$this->_logger->info('Checking for earthquakes!');
 
 		$usgs = new USGS($this->_logger);
@@ -97,10 +97,10 @@ class processEarthquakes
                             $earthquake->setDistance();
                             $earthquake->setLocation();
                             if ($earthquake->updateEarthquake($this->_table)) {
-                                $this->_logger->info('Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
+                                $this->_logger->debug('Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
                                 $updatedEarthquakeCount++;
                             } else {
-                                $this->_logger->info('🤯 Earthquake NOT updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
+                                $this->_logger->warn('🤯 Earthquake NOT updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
                                 $failedUpdateEarthquakeCount++;
                             }
                         }
@@ -112,7 +112,7 @@ class processEarthquakes
                             $earthquake->setBDCLocationData($this->_bigDataCloudKey);
                             if ($this->_store === "TRUE") {
                                 if ($earthquakeEntry = $earthquake->saveEarthquake($this->_table)) {
-                                    $this->_logger->info('Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
+                                    $this->_logger->debug('Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
                                     $newEarthquakeCount++;
                                     $geocode = $earthquake->getGeocode();
                                     if (isset($geocode->localityInfo->administrative)) {
@@ -128,7 +128,7 @@ class processEarthquakes
                                         }
                                     }
                                 } else {
-                                    $this->_logger->info('🤯 Earthquake NOT added: ' . $this->_earthquakeId);
+                                    $this->_logger->warn('🤯 Earthquake NOT added: ' . $this->_earthquakeId);
                                     $failedEarthquakeCount++;
                                 }
                             }
@@ -139,7 +139,7 @@ class processEarthquakes
                                 $this->_logger->debug('Lat: ' . $lat . ' - Long: ' . $long);
                             }
                             if ($this->_sendPush === "TRUE") {
-                                $this->_logger->info("**************************** GOING TO SEND PUSH NOTIFICATIONS ****************************");
+                                $this->_logger->info("********** Sending Push Notifications **********");
                                 $this->sendPushNotification($earthquakeElement);
                             }
                         } catch (mysqli_sql_exception $e) {
@@ -149,7 +149,7 @@ class processEarthquakes
                         }
                     }
                 } else {
-                    $this->_logger->error('Could not extract an id for an earthquake (exception not thrown).');
+                    $this->_logger->warn('Could not extract an id for an earthquake (exception not thrown).');
                 }
             }
 
@@ -187,15 +187,15 @@ class processEarthquakes
         if ($locationEntry == 0) {
             $locationEntry = $location->saveLocation();
             if ($locationEntry == 0) {
-                $this->_logger->info('🤯 Location NOT added: ' . $locationEntry);
+                $this->_logger->warn('🤯 Location NOT added: ' . $locationEntry);
             } else {
                 $this->linkEarthquakeToLocation($earthquakeEntry, $locationEntry);
-                $this->_logger->info('New Location : ' . $locationEntry . ' linked to Earthquake: ' . $earthquakeEntry);
+                $this->_logger->debug('New Location : ' . $locationEntry . ' linked to Earthquake: ' . $earthquakeEntry);
             }
         } else {
 //        if ($locationEntry != 0) {
             $this->linkEarthquakeToLocation($earthquakeEntry, $locationEntry);
-            $this->_logger->info('Existing Location : ' . $locationEntry . ' linked to Earthquake: ' . $earthquakeEntry);
+            $this->_logger->debug('Existing Location : ' . $locationEntry . ' linked to Earthquake: ' . $earthquakeEntry);
         }
     }
 
@@ -204,7 +204,7 @@ class processEarthquakes
         $eqLocation = new EarthquakeLocation($this->_logger, $this->_db, $earthquakeEntry, $locationEntry);
         if ($eqLocation->getEarthquakeLocationExists() === FALSE) {
             if ($eqLocation->saveEarthquakeLocation() === FALSE) {
-                $this->_logger->info('🤯 Earthquake-Location NOT added: eq: ' . $earthquakeEntry . ' - lc: ' . $locationEntry);
+                $this->_logger->warn('🤯 Earthquake-Location NOT added: eq: ' . $earthquakeEntry . ' - lc: ' . $locationEntry);
             }
         }
     }
@@ -234,7 +234,19 @@ class processEarthquakes
 		$long = $earthquake->geometry->coordinates[0];
 		$hashtag = str_replace(" ", "", $type);
 
-		$status = 'USGS reports a M' . $magnitude .  ' ' . $type . ', ' . $place . ' on ' . $time . ' UTC ' . $url . ' #' . $hashtag;
+		$status = "USGS reports a M" . $magnitude .  " " . $type . ", " . $place . " on " . $time . " UTC\r";
+        $status .= $url . "\r";
+        if ($magnitude >= 4 && $magnitude < 7) {
+            $now = time();
+            $lastAdvertiseFile = '/var/www/html/Earthquakes/lastAdvertise';
+            $lastAdvertise = file_get_contents($lastAdvertiseFile);
+            $timeDifference = $now - $lastAdvertise;
+            if ($timeDifference > 3600) {
+                file_put_contents($lastAdvertiseFile,$now);
+                $status .= "Try Every Earthquake on your iPhone! Grab the new app here: https://t.co/E1g19fUIFv" . "\r";
+            }
+        }
+        $status .= "#" . $hashtag;
 		$completeStatus = $status . ' @ ' . $lat . ' ' . $long;
 
 		$this->_logger->info('Tweeting this: ' . $completeStatus);

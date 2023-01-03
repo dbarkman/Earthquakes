@@ -131,8 +131,7 @@ class Earthquake
         }
     }
 
-    public function setBDCLocationData($key)
-    {
+    public function setBDCLocationData($key) {
         $url = 'https://api.bigdatacloud.net/data/reverse-geocode-with-timezone?latitude=' . $this->_latitude . '&longitude=' . $this->_longitude . '&localityLanguage=en&key=' . $key;
         $bigDataCloud = new BigDataCloud($this->_logger);
         $geocode = $bigDataCloud->reverseGeocode($url);
@@ -201,6 +200,7 @@ class Earthquake
 				detailUrl = '$this->_detailUrl',
 				locationUpdated = '$this->_locationUpdated'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -209,7 +209,7 @@ class Earthquake
             return mysqli_insert_id($this->_db);
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error - IEQ: ' . $errors);
+            $this->_logger->error('Database error - IEQ: ' . $errors);
             return FALSE;
         }
     }
@@ -255,6 +255,7 @@ class Earthquake
             WHERE
 				id = '$this->_id'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -263,7 +264,7 @@ class Earthquake
             return TRUE;
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error - UEQ: ' . $errors);
+            $this->_logger->error('Database error - UEQ: ' . $errors);
             return FALSE;
         }
     }
@@ -284,6 +285,7 @@ class Earthquake
             WHERE
 				id = '$this->_id'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -292,7 +294,7 @@ class Earthquake
             return TRUE;
         } else {
             if ($errors = $this->_db->error) {
-                $this->_logger->info('Database error for - UBDCD: ' . $this->_id . ' - UBDCD: ' . $errors);
+                $this->_logger->error('Database error for - UBDCD: ' . $this->_id . ' - UBDCD: ' . $errors);
                 return FALSE;
             } else {
                 return TRUE;
@@ -309,6 +311,7 @@ class Earthquake
             WHERE
 				id = '$id'
 		";
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($db, $sql);
         $rowsAffected = mysqli_affected_rows($db);
@@ -317,7 +320,7 @@ class Earthquake
             return TRUE;
         } else {
             if ($errors = $db->error) {
-                $logger->info('Database error for: ' . $id . ' - UT: ' . $errors);
+                $logger->error('Database error for: ' . $id . ' - UT: ' . $errors);
                 return FALSE;
             } else {
                 return TRUE;
@@ -334,6 +337,7 @@ class Earthquake
             WHERE
 				id = '$id'
 		";
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($db, $sql);
         $rowsAffected = mysqli_affected_rows($db);
@@ -342,7 +346,7 @@ class Earthquake
             return TRUE;
         } else {
             if ($errors = $db->error) {
-                $logger->info('Database error for: ' . $id . ' - UT: ' . $errors);
+                $logger->error('Database error for: ' . $id . ' - UT: ' . $errors);
                 return FALSE;
             } else {
                 return TRUE;
@@ -359,6 +363,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -379,6 +384,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -399,6 +405,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -420,6 +427,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -432,22 +440,22 @@ class Earthquake
         }
     }
 
-    public function deleteEarthquake($table)
-    {
+    public function deleteEarthquake($table) {
         $sql = "
             DELETE FROM
                 $table
             WHERE
                 id = '$this->_id'
         ";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
         if ($rowsAffected > 0) {
-            $this->_logger->info('Deleted earthquake: ' . $this->_id);
+            $this->_logger->debug('Deleted earthquake: ' . $this->_id);
             return TRUE;
         } else {
-            $this->_logger->info('Failed to delete earthquake: ' . $this->_id);
+            $this->_logger->error('Failed to delete earthquake: ' . $this->_id);
             return FALSE;
         }
     }
@@ -455,64 +463,56 @@ class Earthquake
     /**
 	 * @return mixed
 	 */
-	public function getId()
-	{
+	public function getId() {
 		return $this->_id;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getAPIUpdateDate()
-	{
+	public function getAPIUpdateDate() {
 		return $this->_updated;
 	}
 
     /**
 	 * @return mixed
 	 */
-	public function getLatitude()
-	{
+	public function getLatitude() {
 		return $this->_latitude;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getLongitude()
-	{
+	public function getLongitude() {
 		return $this->_longitude;
 	}
 
     /**
      * @return mixed
      */
-    public function getGeocode()
-    {
+    public function getGeocode() {
         return $this->_geocode;
     }
 
     /**
      * @return mixed
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->_id = $id;
     }
 
     /**
      * @return mixed
      */
-    public function setTimezone($timezone)
-    {
+    public function setTimezone($timezone) {
         $this->_timezone = $timezone;
     }
 
     /**
      * @return mixed
      */
-    public function setLocationUpdated($locationUpdated)
-    {
+    public function setLocationUpdated($locationUpdated) {
         $this->_locationUpdated = $locationUpdated;
     }
 }

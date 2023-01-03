@@ -30,6 +30,7 @@ class populateW3W
             $this->updateW3W($eq['entry'], $words);
             sleep(1);
         }
+        $this->_logger->info('Updated W3W for: ' . count($nextEq) . ' earthquakes.');
         $time = (microtime(true) - $start);
         $this->_logger->info('Time to update w3w: ' . $time);
     }
@@ -44,8 +45,8 @@ class populateW3W
                 what3words IS null
             ORDER BY
                 entry DESC
-            LIMIT 45
         ";
+//        LIMIT 45
         $earthquakes = array();
         $result = mysqli_query($this->_db, $sql);
         if ($result === FALSE) {

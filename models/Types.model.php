@@ -21,6 +21,7 @@ class Types {
             ORDER BY
                 count DESC
         ";
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $types = array();
         $result = mysqli_query($db, $sql);

@@ -185,10 +185,10 @@ class fetchEarthquakes
                         if ($this->_action == 'delete') {
                             if ($earthquake->deleteEarthquake($this->_table)) {
                                 $this->_deletedEarthquakes++;
-                                $this->_logger->info('Earthquake deleted: ' . $this->_earthquakeId);
+                                $this->_logger->debug('Earthquake deleted: ' . $this->_earthquakeId);
                             } else {
                                 $this->_failedDeletedEarthquakes++;
-                                $this->_logger->info('🤯 Earthquake NOT deleted: ' . $this->_earthquakeId);
+                                $this->_logger->warn('🤯 Earthquake NOT deleted: ' . $this->_earthquakeId);
                             }
                         } else {
                             $updatedDB = $earthquake->getDBUpdateDate($this->_table);
@@ -207,10 +207,10 @@ class fetchEarthquakes
                                 $earthquake->setDistance();
                                 $earthquake->setLocation();
                                 if ($earthquake->updateEarthquake($this->_table)) {
-                                    $this->_logger->info('Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
+                                    $this->_logger->debug('Earthquake updated: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
                                     $this->_updatedEarthquakes++;
                                 } else {
-                                    $this->_logger->info('🤯 Earthquake NOT updated: ' . $this->_earthquakeId);
+                                    $this->_logger->warn('🤯 Earthquake NOT updated: ' . $this->_earthquakeId);
                                     $this->_failedUpdateEarthquakes++;
                                 }
                             }
@@ -221,10 +221,10 @@ class fetchEarthquakes
                             $earthquake->setDistance();
                             $earthquake->setLocation();
                             if ($earthquake->saveEarthquake($this->_table)) {
-                                $this->_logger->info('Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
+                                $this->_logger->debug('Earthquake added: ' . $this->_earthquakeId . ' - ' . $earthquakeEntry);
                                 $this->_newEarthquakes++;
                             } else {
-                                $this->_logger->info('🤯 Earthquake NOT added: ' . $this->_earthquakeId . ' **********');
+                                $this->_logger->warn('🤯 Earthquake NOT added: ' . $this->_earthquakeId . ' **********');
                                 var_dump($earthquakeElement);
                                 $this->_failedNewEarthquakes++;
                             }

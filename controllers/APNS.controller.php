@@ -21,9 +21,13 @@ class APNS extends Curl
 
     public function sendNotifications($url, $headers, $payload)
     {
-        $this->_logger->info('APNS URL: ' . $url);
+        $this->_logger->debug('APNS URL: ' . $url);
         $response = self::runCurl('POST', $url, $headers, null, $payload, true);
-        $this->_logger->info("APNS API returned: " . $response['status']);
+        if ($response['status'] == 200) {
+            $this->_logger->debug("APNS API returned: " . $response['status']);
+        } else {
+            $this->_logger->warn("APNS API returned: " . $response['status']);
+        }
         if ($response['status'] == 429) {
             $this->_logger->error("APNS API returned 429, BACK OFF!");
             $response['output'] = false;

@@ -36,12 +36,7 @@ class SendPushes
     public function sendPushes($debug, $title, $payload, $magnitude, $eqLatitude, $eqLongitude) {
 
         $start = microtime(true);
-        $this->_logger->info('Pushing Notifications');
         $apns = new APNS($this->_logger);
-
-        $this->_logger->info('Magnitude: ' . $magnitude);
-        $this->_logger->info('eqLatitude: ' . $eqLatitude);
-        $this->_logger->info('eqLongitude: ' . $eqLongitude);
 
         $alert = [
             'title' => $title,
@@ -68,8 +63,11 @@ class SendPushes
 
         $tokensDeleted = 0;
         $notificationsSent = 0;
+        $notificationsCheckedForLocation = 0;
+        $notificationsSendingForLocation = 0;
         foreach ($tokens as $token) {
             if ($token['location'] == 1) {
+                $notificationsCheckedForLocation++;
                 $tokenUnits = $token['units'];
                 $tokenRadius = $token['radius'];
                 $tokenLatitude = $token['latitude'];
@@ -86,8 +84,6 @@ class SendPushes
                 $maxLatitude = $tokenLatitude + $tokenRadius / $R * 180 / pi();
                 $minLongitude = $tokenLongitude - $tokenRadius / $R * 180 / pi() / cos($tokenLatitude * pi() / 180);
                 $maxLongitude = $tokenLongitude + $tokenRadius / $R * 180 / pi() / cos($tokenLatitude * pi() / 180);
-                $this->_logger->info('eqLat: ' . $eqLatitude . ', minLat: ' . $minLatitude . ', maxLat: ' . $maxLatitude);
-                $this->_logger->info('eqLong: ' . $eqLongitude . ', minLong: ' . $minLongitude . ', maxLong: ' . $maxLongitude);
                 if ($eqLatitude > $maxLatitude) {
                     continue;
                 } else {
@@ -99,6 +95,8 @@ class SendPushes
                         } else {
                             if ($eqLongitude < $minLongitude) {
                                 continue;
+                            } else {
+                                $notificationsSendingForLocation++;
                             }
                         }
                     }
@@ -121,7 +119,8 @@ class SendPushes
             }
         }
         $this->_logger->info('Deleted ' . $tokensDeleted . ' tokens.');
-        $this->_logger->info('Sent ' . $notificationsSent . ' notifications!');
+        $this->_logger->info('Sent ' . $notificationsSent . ' total notifications!');
+        $this->_logger->info('Sent ' . $notificationsSendingForLocation . ' notifications for location!');
         $time = (microtime(true) - $start);
         $this->_logger->info('Time to send pushes: ' . $time);
     }

@@ -24,10 +24,10 @@ class Token
     private $_latitude;
     private $_longitude;
 
-    public function __construct($logger, $db, $token, $debug, $sendPush, $magnitude, $location = 0, $radius = 0, $units = '', $latitude = 0, $longitude = 0) {
+    public function __construct($logger, $db, $uuid, $token, $debug, $sendPush, $magnitude, $location = 0, $radius = 0, $units = '', $latitude = 0, $longitude = 0) {
         $this->_logger = $logger;
         $this->_db = $db;
-        $this->_uuid = mysqli_real_escape_string($this->_db, UUID::getUUID());
+        $this->_uuid = $uuid;
         $this->_token = $token;
         $this->_debug = $debug;
         $this->_sendPush = $sendPush;
@@ -55,7 +55,7 @@ class Token
 				latitude = '$this->_latitude',
 				longitude = '$this->_longitude'
 		";
-        $this->_logger->info('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -64,12 +64,74 @@ class Token
             return TRUE;
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error on token insert: ' . $errors);
+            $this->_logger->error('Database error on token insert: ' . $errors);
+            return FALSE;
+        }
+    }
+
+    public function updateId() {
+        $sql = "
+			UPDATE
+				notificationTokens
+			SET
+			    token = '$this->_token',
+				debug = '$this->_debug',
+				sendPush = '$this->_sendPush',
+				magnitude = '$this->_magnitude',
+				location = '$this->_location',
+				radius = '$this->_radius',
+				units = '$this->_units',
+				latitude = '$this->_latitude',
+				longitude = '$this->_longitude'
+            WHERE
+				id = '$this->_uuid'
+		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+
+        mysqli_query($this->_db, $sql);
+        $rowsAffected = mysqli_affected_rows($this->_db);
+
+        $errors = $this->_db->error;
+        if ($rowsAffected === 1 || empty($errors)) {
+            return TRUE;
+        } else {
+            $this->_logger->error('Database error on id update: ' . $errors);
             return FALSE;
         }
     }
 
     public function updateToken() {
+        $sql = "
+			UPDATE
+				notificationTokens
+			SET
+			    id = '$this->_uuid',
+				debug = '$this->_debug',
+				sendPush = '$this->_sendPush',
+				magnitude = '$this->_magnitude',
+				location = '$this->_location',
+				radius = '$this->_radius',
+				units = '$this->_units',
+				latitude = '$this->_latitude',
+				longitude = '$this->_longitude'
+            WHERE
+				token = '$this->_token'
+		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+
+        mysqli_query($this->_db, $sql);
+        $rowsAffected = mysqli_affected_rows($this->_db);
+
+        $errors = $this->_db->error;
+        if ($rowsAffected === 1 || empty($errors)) {
+            return TRUE;
+        } else {
+            $this->_logger->error('Database error on token update: ' . $errors);
+            return FALSE;
+        }
+    }
+
+    public function updateTokenSettings() {
         $sql = "
 			UPDATE
 				notificationTokens
@@ -85,7 +147,7 @@ class Token
             WHERE
 				token = '$this->_token'
 		";
-        $this->_logger->info('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -94,7 +156,28 @@ class Token
         if ($rowsAffected === 1 || empty($errors)) {
             return TRUE;
         } else {
-            $this->_logger->info('Database error on token update: ' . $errors);
+            $this->_logger->error('Database error on token update: ' . $errors);
+            return FALSE;
+        }
+    }
+
+    public function getIdExists() {
+        $sql = "
+            SELECT
+                id
+            FROM
+                notificationTokens
+            WHERE
+                id = '$this->_uuid'
+        ";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+
+        $result = mysqli_query($this->_db, $sql);
+        $rows = mysqli_num_rows($result);
+        if ($rows > 0) {
+            $row = $result->fetch_row();
+            return TRUE;
+        } else {
             return FALSE;
         }
     }
@@ -108,15 +191,15 @@ class Token
             WHERE
                 token = '$this->_token'
         ";
-        $this->_logger->info('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
         if ($rows > 0) {
             $row = $result->fetch_row();
-            return $row[0];
+            return TRUE;
         } else {
-            return 0;
+            return FALSE;
         }
     }
 
@@ -127,15 +210,15 @@ class Token
             WHERE
                 token = '$token'
         ";
-        $logger->info('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($db, $sql);
         $rowsAffected = mysqli_affected_rows($db);
         if ($rowsAffected > 0) {
-            $logger->info('Deleted notification token: ' . $token);
+            $logger->debug('Deleted notification token: ' . $token);
             return TRUE;
         } else {
-            $logger->info('Failed to delete notification token: ' . $token);
+            $logger->error('Failed to delete notification token: ' . $token);
             return FALSE;
         }
     }

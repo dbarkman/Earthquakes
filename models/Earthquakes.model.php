@@ -11,8 +11,7 @@ class Earthquakes
     private $_logger;
     private $_db;
 
-    public function __construct($logger, $db)
-    {
+    public function __construct($logger, $db) {
         $this->_logger = $logger;
         $this->_db = $db;
     }
@@ -26,7 +25,6 @@ class Earthquakes
     //recent time based, ex: all Eqs in the last week
     //last time period for all locations
     public static function GetEarthquakes($db, $logger, $parameters) {
-
         $location = (array_key_exists('location', $parameters)) ? $parameters['location'] : false;
         $latest = (array_key_exists('latest', $parameters)) ? $parameters['latest'] : false;
         $interval = (array_key_exists('interval', $parameters)) ? $parameters['interval'] : '';
@@ -42,6 +40,7 @@ class Earthquakes
         $count = (array_key_exists('count', $parameters)) ? $parameters['count'] : 100;
         $start = (array_key_exists('start', $parameters)) ? $parameters['start'] : 0;
         $order = (array_key_exists('order', $parameters)) ? $parameters['order'] : 'DESC';
+        $orderBy = (array_key_exists('orderBy', $parameters)) ? $parameters['orderBy'] : 'time';
         $type = (array_key_exists('type', $parameters)) ? $parameters['type'] : 'earthquake';
         if ($type == 'notEarthquake') {
             $type = "AND type != 'earthquake'";
@@ -79,7 +78,7 @@ class Earthquakes
 //        $limit = ($start > 0) ? 'LIMIT ' . $start . ',' . $count : 'LIMIT ' . $count;
 
         if ($location) {
-            return self::circleSearch($db, $logger, $startDate, $endDate, $latitude, $longitude, $radius, $units, $limit, $magnitude, $intensity, $significance, $type, $order, $latest);
+            return self::circleSearch($db, $logger, $startDate, $endDate, $latitude, $longitude, $radius, $units, $limit, $magnitude, $intensity, $significance, $type, $order, $orderBy, $latest);
 //        } else if ($latest) {
 //            return self::circleSearch($db, $logger, $startDate, $endDate, $latitude, $longitude, 100, 'miles', 1, $magnitude, $intensity, $type, $order, $latest);
         } else {
@@ -107,10 +106,10 @@ class Earthquakes
                     earthquakes
                 $queryCondition
                 ORDER BY 
-                    time $order
+                    $orderBy $order
                 $limit
             ";
-            $logger->info('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+            $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
             $result = mysqli_query($db, $sql);
             if ($result === FALSE) {
@@ -183,6 +182,8 @@ class Earthquakes
             ORDER BY
                 adminLevel ASC
         ";
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+
         $locations = array();
         $result = mysqli_query($db, $sql);
         if ($result === FALSE) {
@@ -203,7 +204,7 @@ class Earthquakes
     }
 
     //recent, near me
-    private static function circleSearch($db, $logger, $startDate, $endDate, $latitude, $longitude, $radius, $units, $limit, $magnitude, $intensity, $significance, $type, $order, $latest) {
+    private static function circleSearch($db, $logger, $startDate, $endDate, $latitude, $longitude, $radius, $units, $limit, $magnitude, $intensity, $significance, $type, $order, $orderBy, $latest) {
         /**
          * Geodesy-related code is © 2008-2022 Chris Veness
          * Under an MIT licence, without any warranty express or implied
@@ -256,10 +257,10 @@ class Earthquakes
                 longitude BETWEEN $minLongitude AND $maxLongitude
                 $queryCondition
                 ORDER BY 
-                    time $order
+                    $orderBy $order
                 $limit
         ";
-        $logger->info('Circle SQL: ' . preg_replace('!\s+!', ' ', $sql));
+        $logger->debug('Circle SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $earthquakes = array();
         $earthquakeArray = array();

@@ -17,8 +17,7 @@ class Location
     private $_geonameId;
     private $_adminLevel;
 
-    public function __construct($logger, $db, $location)
-    {
+    public function __construct($logger, $db, $location) {
         $this->_logger = $logger;
         $this->_db = $db;
 
@@ -29,8 +28,7 @@ class Location
         $this->_adminLevel = (isset($location->adminLevel)) ? $location->adminLevel : 0;
     }
 
-    public function getLocationExists()
-    {
+    public function getLocationExists() {
         $sql = "
 			SELECT
 				entry
@@ -41,7 +39,7 @@ class Location
 			    AND 
 			    wikidataId = '$this->_wikidataId'
 		";
-//        $this->_logger->info('SQL: ' . $sql);
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -53,8 +51,7 @@ class Location
         }
     }
 
-    public function saveLocation()
-    {
+    public function saveLocation() {
         $sql = "
 			INSERT INTO
 				locations
@@ -65,6 +62,7 @@ class Location
                 geonameId = '$this->_geonameId',
                 adminLevel = '$this->_adminLevel'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -73,13 +71,12 @@ class Location
             return mysqli_insert_id($this->_db);
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error - IL: ' . $errors);
+            $this->_logger->error('Database error - IL: ' . $errors);
             return FALSE;
         }
     }
 
-    public function updateLocation()
-    {
+    public function updateLocation() {
         $sql = "
 			UPDATE
 				locations
@@ -102,13 +99,12 @@ class Location
             return TRUE;
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error - UL: ' . $errors);
+            $this->_logger->error('Database error - UL: ' . $errors);
             return FALSE;
         }
     }
 
-    public function getName()
-    {
+    public function getName() {
         return $this->_name;
     }
 }

@@ -33,6 +33,7 @@ class EarthquakeLocation
 			    AND 
 			    locationEntry = $this->_locationEntry
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -44,8 +45,7 @@ class EarthquakeLocation
         }
     }
 
-    public function saveEarthquakeLocation()
-    {
+    public function saveEarthquakeLocation() {
         $sql = "
 			INSERT INTO
 				earthquakesLocations
@@ -53,6 +53,7 @@ class EarthquakeLocation
                 earthquakeEntry = '$this->_earthquakeEntry',
                 locationEntry = '$this->_locationEntry'
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -61,13 +62,12 @@ class EarthquakeLocation
             return TRUE;
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error - IEL: ' . $errors);
+            $this->_logger->error('Database error - IEL: ' . $errors);
             return FALSE;
         }
     }
 
-    public function updateEarthquakeLocation()
-    {
+    public function updateEarthquakeLocation() {
         $sql = "
 			UPDATE
 				earthquakesLocations
@@ -79,6 +79,7 @@ class EarthquakeLocation
 			    AND 
 			    locationEntry = $this->_locationEntry
 		";
+        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -87,19 +88,19 @@ class EarthquakeLocation
             return TRUE;
         } else {
             $errors = $this->_db->error;
-            $this->_logger->info('Database error - UEL: ' . $errors);
+            $this->_logger->error('Database error - UEL: ' . $errors);
             return FALSE;
         }
     }
 
-    public static function deleteEarthquakeLocationConnections($logger, $db, $earthquakeEntry)
-    {
+    public static function deleteEarthquakeLocationConnections($logger, $db, $earthquakeEntry) {
         $sql = "
             DELETE FROM
                 earthquakesLocations
             WHERE
                 earthquakeEntry = $earthquakeEntry
         ";
+        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($db, $sql);
         $rowsAffected = mysqli_affected_rows($db);
