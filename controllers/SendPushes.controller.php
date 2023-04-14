@@ -84,6 +84,7 @@ class SendPushes
                 $maxLatitude = $tokenLatitude + $tokenRadius / $R * 180 / pi();
                 $minLongitude = $tokenLongitude - $tokenRadius / $R * 180 / pi() / cos($tokenLatitude * pi() / 180);
                 $maxLongitude = $tokenLongitude + $tokenRadius / $R * 180 / pi() / cos($tokenLatitude * pi() / 180);
+//                $this->_logger->error('TokenLatitude: ' . $tokenLatitude . ', TokenLongitude: ' . $tokenLongitude . ', TokenRadius: ' . $tokenRadius . PHP_EOL);
                 if ($eqLatitude > $maxLatitude) {
                     continue;
                 } else {
@@ -112,9 +113,11 @@ class SendPushes
             }
             if ($response['status'] === 400 || $response['status'] === 410) {
                 $json = @json_decode($response['output']);
-                if ($json->reason === 'BadDeviceToken') {
+                if ($json->reason === 'BadDeviceToken' || $json->reason === 'Unregistered') {
                     Token::deleteToken($this->_logger, $this->_db, $token['token']);
                     $tokensDeleted++;
+                } else {
+                    var_dump($json);
                 }
             }
         }
