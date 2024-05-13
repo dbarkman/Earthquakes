@@ -200,7 +200,7 @@ class Earthquake
 				detailUrl = '$this->_detailUrl',
 				locationUpdated = '$this->_locationUpdated'
 		";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -255,7 +255,7 @@ class Earthquake
             WHERE
 				id = '$this->_id'
 		";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -285,7 +285,7 @@ class Earthquake
             WHERE
 				id = '$this->_id'
 		";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);
@@ -311,7 +311,7 @@ class Earthquake
             WHERE
 				id = '$id'
 		";
-        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($db, $sql);
         $rowsAffected = mysqli_affected_rows($db);
@@ -337,7 +337,7 @@ class Earthquake
             WHERE
 				id = '$id'
 		";
-        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($db, $sql);
         $rowsAffected = mysqli_affected_rows($db);
@@ -363,7 +363,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -384,7 +384,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -405,7 +405,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -427,7 +427,7 @@ class Earthquake
 			WHERE
 				id = '$this->_id'
 		";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         $result = mysqli_query($this->_db, $sql);
         $rows = mysqli_num_rows($result);
@@ -447,7 +447,7 @@ class Earthquake
             WHERE
                 id = '$this->_id'
         ";
-        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
+//        $this->_logger->debug('SQL: ' . preg_replace('!\s+!', ' ', $sql));
 
         mysqli_query($this->_db, $sql);
         $rowsAffected = mysqli_affected_rows($this->_db);

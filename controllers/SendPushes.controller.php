@@ -70,8 +70,8 @@ class SendPushes
                 $notificationsCheckedForLocation++;
                 $tokenUnits = $token['units'];
                 $tokenRadius = $token['radius'];
-                $tokenLatitude = $token['latitude'];
-                $tokenLongitude = $token['longitude'];
+                $tokenLatitude = floatval($token['latitude']);
+                $tokenLongitude = floatval($token['longitude']);
 
                 if ($tokenUnits == 'miles') {
                     $tokenRadius = Earthquakes::convertMilesToMeters($tokenRadius);

@@ -53,6 +53,8 @@ class updateEarthquakeLocations
                 $this->_table 
             WHERE 
                 locationUpdated = 0
+            ORDER BY
+                date DESC
             LIMIT $count
         ";
 

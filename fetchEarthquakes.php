@@ -35,6 +35,7 @@ class fetchEarthquakes
     private $_apiCalls;
     private $_apiCallsFailed;
     private $_sleepWait;
+    private $_earthquakeId;
 
 	public function __construct($startTime, $endTime, $table, $action)
 	{
