@@ -15,7 +15,7 @@ require_once dirname(__FILE__) . '/includes/includes.php';
 $container = new Container();
 $logger = $container->getLogger();
 
-$blogFeed = new BlogFeed("https://www.upwork.com/ab/feed/jobs/rss?q=%28app+OR+development+OR+mobile%29+AND+iOS+AND+NOT+%28react+OR+flutter+OR+flutterflow+OR+ionic%29&sort=recency&user_location_match=1&paging=0%3B10&api_params=1&securityToken=aef91c7ca75f8801ddc4c8d325965d529f89b2d67b71fbc70540b0c832a1a2c98af436c0a50ee538812256529c30e4fbc92ea5dd7a7caf8224bd1517668a7c98&userUid=652608874966384640&orgUid=652608874970578945");
+$blogFeed = new BlogFeed("https://www.upwork.com/ab/feed/jobs/rss?q=%28application+OR+app+OR+development+OR+mobile%29+AND+iOS+AND+NOT+%28xamarin+OR+ai+OR+game+OR+iot+OR+crypto+OR+dating+OR+unity+OR+react+OR+ionic+OR+flutter+OR+flutterflow+OR+bubble%29&sort=recency&job_type=hourly%2Cfixed&budget=500-999%2C1000-4999%2C5000-&hourly_rate=50-&location=Americas%2CEurope%2COceania&paging=0%3B10&api_params=1&securityToken=aef91c7ca75f8801ddc4c8d325965d529f89b2d67b71fbc70540b0c832a1a2c98af436c0a50ee538812256529c30e4fbc92ea5dd7a7caf8224bd1517668a7c98&userUid=652608874966384640&orgUid=652608874970578945");
 
 global $emails;
 $davidEmail = $emails['davidbarkman'];

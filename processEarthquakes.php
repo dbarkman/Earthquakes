@@ -217,6 +217,12 @@ class processEarthquakes
         $time = date('n/j/y @ G:i:s', substr($earthquake->properties->time, 0, 10));
         $type = $earthquake->properties->type;
 
+        //temp test of notifications
+//        if ($magnitude < 1) {
+//            $this->_pushesDebug = 1;
+//        }
+        //end of temp test of notifications
+
         $title = 'New ' . $type . '!';
         $payload = 'M' . $magnitude .  ' ' . $type . ', ' . $place . ' on ' . $time . ' UTC';
         $this->_sendPushes->sendPushes($this->_pushesDebug, $title, $payload, $magnitude, $latitude, $longitude);

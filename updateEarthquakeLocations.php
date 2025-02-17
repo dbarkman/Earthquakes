@@ -38,8 +38,10 @@ class updateEarthquakeLocations
         $this->_count = 0;
 
         $earthquakeArray = $this->getEarthquakesWithNoLocation($count);
+        $this->_logger->info('Earthquake locations needing updated: ' . $count);
         foreach ($earthquakeArray as $earthquake) {
             $this->setEarthquakeLocation($earthquake);
+            $this->_logger->info('Earthquake locations updated so far: ' . $this->_count . ' of ' . $count);
         }
         $this->_logger->info('Earthquake locations updated: ' . $this->_count);
     }

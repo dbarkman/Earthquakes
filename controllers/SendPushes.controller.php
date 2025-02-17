@@ -50,7 +50,7 @@ class SendPushes
         $this->_payload = ['aps' => $aps];
         $encodedPayload = json_encode($this->_payload);
 
-        $server = $debug == 1 ? 'api.development' : 'api';
+        $server = $debug == 1 ? 'api.sandbox' : 'api';
         $tokens = Tokens::getTokensToReceiveNotification($this->_logger, $this->_db, $debug, $magnitude);
 
         $this->_logger->info('Processing ' . count($tokens) . ' tokens.');
